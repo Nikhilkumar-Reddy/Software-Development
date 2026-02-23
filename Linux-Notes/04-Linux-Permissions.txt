@@ -1,0 +1,121 @@
+
+Permissions in Linux :
+_____________________________
+
+[ec2-user@ip-172-31-27-201 ~]$ ls-a
+
+-/d   rwx  rwx rwx
+ -    ---  --- --- 1 ec2-user ec2-user  18 Jan 28  2023 .bash_logout
+ 1     2    3   4
+
+1st one  dash can be -/d refers to File / Directory 
+2nd three dashes can to read(r),write(w) and execute(x) refers to user/owner(u) Permissions
+3rd three dashes can be read(r),write(w) and execute(x) refers to group(g) Permissions
+4th three dashes can be read(r),write(w) and execute(x) refers to other(o) Permissions
+
+____________________________
+To change the permissions :
+____________________________
+
+chmod o+w <file-name.txt> - > Provides access to others with write access.
+chmod u+r <file-name.txt> - > Provides access to user/owner with read access.
+chmod g+x <file-name.txt> - > Provides access to group with execute access.
+
+[ec2-user@ip-172-31-27-201 ~]$ vi permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+____________________________________________________________________________
+Now to change permissions write access to groups and others.
+_____________________________________________________________________________
+
+[ec2-user@ip-172-31-27-201 ~]$ chmod g+w permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+-rw-rw-r--. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ chmod o+w permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+-rw-rw-rw-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+
+___________________________________________________________________________
+Now you can also remove read permissions for all users, groups and others :
+____________________________________________________________________________
+
+-rw-rw-rw-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ chmod o-r permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ chmod g-r permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ chmod u-r permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+--w--w--w-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+
+_________________________________________________
+
+Other method to provide the permissions :
+____________________________________________
+
+R - > 4  &  W - > 2   &   X - > 1  ( Notations to denote it)
+
+either owner of the file or root user can only change access levels. 
+
+[ec2-user@ip-172-31-27-201 ~]$ chmod 777 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+-rwxrwxrwx. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+
+[ec2-user@ip-172-31-27-201 ~]$ chmod 666 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ ls -ll
+total 4
+-rw-rw-rw-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+
+_______________________________________________________________________________
+
+ownerships in Linux : ownership can only be changed by root user, and not even
+owner of the file can change the ownership.
+___________________________________________________________________________
+
+[ec2-user@ip-172-31-27-201 ~]$ mkdir ownership
+[ec2-user@ip-172-31-27-201 ~]$ cd ownership
+[ec2-user@ip-172-31-27-201 ownership]$ touch subfile.txt
+[ec2-user@ip-172-31-27-201 ownership]$ cat >subfile.txt
+This is a subfile for ownership
+[ec2-user@ip-172-31-27-201 ownership]$ ls
+subfile.txt
+[ec2-user@ip-172-31-27-201 ownership]$ cd
+[ec2-user@ip-172-31-27-201 ~]$ ll
+total 4
+drwxr-xr-x. 2 ec2-user ec2-user 25 Feb 23 18:30 ownership
+[ec2-user@ip-172-31-27-201 ~]$ sudo chown root:root ownership
+[ec2-user@ip-172-31-27-201 ~]$ ll
+total 4
+drwxr-xr-x. 2 root     root     25 Feb 23 18:30 ownership
+-rw-rw-rw-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ cd ownership
+[ec2-user@ip-172-31-27-201 ownership]$ ll
+total 4
+-rw-r--r--. 1 ec2-user ec2-user 31 Feb 23 18:30 subfile.txt
+[ec2-user@ip-172-31-27-201 ownership]$ cd
+[ec2-user@ip-172-31-27-201 ~]$ sudo chown -R root:root ownership
+[ec2-user@ip-172-31-27-201 ~]$ ll
+total 4
+drwxr-xr-x. 2 root     root     25 Feb 23 18:30 ownership
+-rw-rw-rw-. 1 ec2-user ec2-user 17 Feb 23 18:00 permissions.txt
+[ec2-user@ip-172-31-27-201 ~]$ cd ownership
+[ec2-user@ip-172-31-27-201 ownership]$ ll
+total 4
+-rw-r--r--. 1 root root 31 Feb 23 18:30 subfile.txt
+
+
+
+
+
+
+
+Commands : 
+1.  chmod o+w <file-name.txt>  -> Used to provide write access to others.
+2.  chmod o-w <file-name.txt>  - > Used to remove write access permissions for others.
+3.  chmod 666 <file-name.txt>  -> To provide read and write access to owner/user , groups and others.
+4.  chmod 777 <file-name.txt>  -> To provide read and write  and execute access to owner/user , groups and others.
+5.  chown <user>:<group> <file-name.txt> -> to change the user and group details only by root user.
+6.  sudo chown -R <user>:<group> <file-name>  -> Changes directory as well as sub folders in it.
