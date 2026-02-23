@@ -1,0 +1,270 @@
+________________________________
+Launch Instance and Linux OS.
+_______________________________
+
+Once you launch the instance with the existing security groups and keys values
+Go to git bash and open it and go to the place where you store or downloaded the key values.
+
+Path Where I am downloading the keys for the instance:
+
+1. Asi Roja@momdad MINGW64 ~
+$ cd Nikhil
+
+2. Asi Roja@momdad MINGW64 ~/Nikhil
+$ cd Devops
+
+3. Asi Roja@momdad MINGW64 ~/Nikhil/Devops
+$ mkdir daws-07
+
+4. Asi Roja@momdad MINGW64 ~/Nikhil/Devops
+$ cd daws-07
+
+5. Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07
+$ ssh-keygen -f daws-07    ( Using this command we are generating the Keys )
+
+Generating public/private ed25519 key pair.
+
+6. Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07
+$ ssh -i daws-07 ec2-user@54.237.199.35  ( Since keys generated here so when you create the instance give the pub key 
+by importing this existing keys, Once instance created  you need to give instance public ip address )
+
+The authenticity of host '54.237.199.35 (54.237.199.35)' can't be established.
+ED25519 key fingerprint is SHA256:6OOuMVe4x26rwrekqg5kfGPkhkK5WqHL1ZrpvMcqwtM.
+This key is not known by any other names.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '54.237.199.35' (ED25519) to the list of known hosts.
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[ec2-user@ip-172-31-19-184 ~]$ exit  ( To exit the Linux OS)
+logout
+Connection to 54.237.199.35 closed.
+
+
+
+-----------------------------------
+Absolute Path to Login into Linux : 
+-----------------------------------
+1. Asi Roja@momdad MINGW64 ~
+$ pwd
+/c/Users/Asi Roja
+
+2. Asi Roja@momdad MINGW64 ~
+$ ssh -i Nikhil/Devops/daws-07/daws-07 ec2-user@18.212.254.205
+Last login: Sun Feb 22 14:35:43 2026 from 205.254.168.4
+
+---------------
+user Access :
+---------------
+[ec2-user@ip-172-31-26-241 ~]$
+[ec2-user@ip-172-31-26-241 ~]$ pwd
+/home/ec2-user
+--------------------------
+Adminstration Access : 
+--------------------------
+[ec2-user@ip-172-31-26-241 ~]$ sudo su
+[root@ip-172-31-26-241 ec2-user]#
+[root@ip-172-31-26-241 ec2-user]# pwd
+/home/ec2-user
+
+--------------
+Root Access :
+--------------
+[root@ip-172-31-26-241 ec2-user]# sudo su -
+Last login: Sun Feb 22 14:54:26 UTC 2026 on pts/2
+[root@ip-172-31-26-241 ~]# pwd
+/root
+
+---------------------------
+Copy Files into Directory: 
+----------------------------
+
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ touch copy.txt
+[ec2-user@ip-172-31-26-241 ~]$ cat >> copy.txt
+Copied file will be moving to other path destination as well
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ cd Devops
+[ec2-user@ip-172-31-26-241 Devops]$ ls
+Jenkins  aws
+[ec2-user@ip-172-31-26-241 Devops]$ cd ..
+[ec2-user@ip-172-31-26-241 ~]$ cp copy.txt Devops
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ cd Devops
+[ec2-user@ip-172-31-26-241 Devops]$ ls
+Jenkins  aws  copy.txt
+[ec2-user@ip-172-31-26-241 Devops]$
+
+-----------------------------------------
+Copy files in same path with txt files :
+-----------------------------------------
+
+[ec2-user@ip-172-31-26-241 ~]$ [ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ cp copy.txt aws
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ cat aws
+Copied file will be moving to other path destination as well
+[ec2-user@ip-172-31-26-241 ~]$ cat copy.txt
+Copied file will be moving to other path destination as well
+[ec2-user@ip-172-31-26-241 ~]$
+
+-----------------------------
+Moving Files into Directory : 
+-----------------------------
+
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  Nikhil.txt  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ mv Nikhil.txt Devops
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ cd Devops
+[ec2-user@ip-172-31-26-241 Devops]$ ls
+Jenkins  Nikhil.txt  aws  copy.txt
+[ec2-user@ip-172-31-26-241 Devops]$
+
+..........................
+Rename the existing file :
+..........................
+
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  aws  copy.txt  testing.txt
+[ec2-user@ip-172-31-26-241 ~]$ mv testing.txt test.txt
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  aws  copy.txt  test.txt
+[ec2-user@ip-172-31-26-241 ~]$
+
+----------------------------------------
+Rename file and move inside directory :
+---------------------------------------
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  aws  copy.txt  test.txt
+[ec2-user@ip-172-31-26-241 ~]$ mv test.txt Devops/renamedtext.txt
+[ec2-user@ip-172-31-26-241 ~]$ ls
+Devops  aws  copy.txt
+[ec2-user@ip-172-31-26-241 ~]$ cd Devops
+[ec2-user@ip-172-31-26-241 Devops]$ ls
+Jenkins  Nikhil.txt  aws  copy.txt  renamedtext.txt
+[ec2-user@ip-172-31-26-241 Devops]$
+
+
+::::::::::::::::::::::::::::::::::::::::::::::
+
+---------------
+Linux Commands : 
+---------------
+pwd - > To check which user login 
+$ - > Normal User
+# - > Super user
+/ -> root user
+1. unmae - > System Information 
+2. ls - > To list the existing files or directories.  ( ls -l , ls -lr ,  ls -lt , ls -ltr , ls -a , ls -al , ll)
+3. mkdir  - > To create the directory
+4. rmdir  - > To remove the directory 
+5. touch - > To create the file .txt 
+6. cat <filename>  - > To read the content on CLI
+7. cat > <filename>  - > To insert the data on CLI ( If you again use the same command then existing content will be removed and latest details will be present)
+8. cat >> <filename>  -> This will help to add new data. the existing data will also available. ( Appends into existing data)
+9. Inside cat command when you enter and if you would like to exit Click ENTER and Ctrl+D to exit.
+10. cd .. - > To go one setp back towards home directory 
+11. cd  - > To create the directory.
+12. cp <source> <destination> - > Duplicate file will be saved in the destination as well.
+13. mv <source> <destination> - > Move or rename of the file
+14. Wget https://download.package.zip  - > Is mailny used to download the packages
+15. curl  - > Is mainly used to view the output on the screen  but it will not download by default
+16. Curl is used to call the API calls
+17. grep   - > used to search the content inside a file  ( grep < word to search> <in which file> ) 
+
+grep -n user user.txt - > at which lines user is present in file user.txt
+grep -i user user.txt -> case sensitive ( Lower / upper case letters treated as same)
+grep -c user user.txt  - > How many lines user was present in user.txt
+grep user user.txt - > shows the lines where user content is there
+grep -v user user.txt - > in which line user content is not present in user.txt file
+grep '^ssh' user.txt - > Searches ssh where line startes with ssh in user.txt file
+grep 'ssh' user.txt - > searches everywhere where ssh was present inside the file
+grep 'ssh$' user.txt - > helps to files ssh in everyline where it ends with it.
+18. head - > to get top 10 lines
+19. head -n 3  - > gives top 3 lines
+20. tail - > bottom 10 lines
+21. history -> to show the history of all the commands.
+
+cut - > mainly provide details inbetween
+
+echo https://nikhil/kumar
+
+if you use echo https://nikhil/kumar | cut -d "/" -f1  ( which gives output as http:) 
+
+echo https://nikhil/kumar  - > awk -F "/" '{print $NF}'  
+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+---------------------------------
+To Learn Basic shortcuts on VIM 
+--------------------------------
+
+VIM  - > Is mainly used to create and open the files.
+To Create .txt File use Vi Text.txt file or Vim Text.txt file.
+Once file created successfully go inside it by using command as vi Text.txt 
+Initially its in ESC mode, To update or insert content inside the existing file, click (i) 
+Once you have updated the content use follow command to view the line numbers , search , some additional shortcuts to access the file.
+
+-------------------------
+ **Colon Operations : ** 
+ ------------------------
+
+ 1. :q - > To quit the file and come outside.
+ 2. :wq - > First save the file and later quit the file.
+ 3. :!q ->  Dont save any changes and Quit , forcefully. 
+ 4. :set nu -> To get the line numbers.
+ 5. :<line-number>  -> cursor poiints to the line.
+ 6. :/<search-word>  - > To search the work ( Top to bottom )
+ 7. :?<search-word>  - > To search the work ( bottom  to Top )
+ 8. :<line-number>d -> To delete the line
+ 9. :%d - > To delete all the lines
+ 10. :noh  -> No highlight the content
+ 11. :<line-number>s/<find-word>/<replace-word> - > Find word and replace it in line for first one.
+ 12. :<line-number>s/<find-word>/<replace-word>/g -> Find word and replace it in line for all.
+ 12. :%s/<find-word>/<replace-word>/g -> Search word and replace everywhere.
+
+
+--------------
+** ESC Mode **
+--------------
+
+1. gg -> takes to top of the files
+2. shift+g -> takes us to bottom of the line
+3. u -> undo 
+4. ctrl+r  -> removed
+5. dd -> deletes the lines if cursor there in line
+6. yy -> copy thr line when cursor available
+7. p -> paste below the cursor line
+8. shift+p -> Paste above the line
+
+
+-------------------------------------------------------------------------
+ Chmod 777 To provide Read , write and execute Operations for the files:
+ ------------------------------------------------------------------------
+file/directory, owner, group , others (-rw-r--r-- )
+Read - > 4 
+Write -> 2
+Execute -> 1
+
+[root@ip-172-31-26-241 shell-practice]# chmod 777 /home/ec2-user/shell-practice/*
+[root@ip-172-31-26-241 shell-practice]# ll
+total 20
+-rwxrwxrwx. 1 root root 1912 Feb 22 18:55 02-variables.sh
+-rwxrwxrwx. 1 root root 2159 Feb 22 18:55 Local-Git-Linux.txt
+-rwxrwxrwx. 1 root root 8555 Feb 22 18:55 daws-07-linux.txt
+

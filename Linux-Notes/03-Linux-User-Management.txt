@@ -1,0 +1,236 @@
+
+User Managment : 
+
+Inorder to create new user you need to use root user access.
+
+sudo su - -> for rootuser account 
+
+[ec2-user@ip-172-31-26-241 ~]$ sudo su -
+Last login: Sun Feb 22 19:02:43 UTC 2026 on pts/0
+[root@ip-172-31-26-241 ~]# pwd
+/root
+[root@ip-172-31-26-241 ~]# useradd Nikhil
+[root@ip-172-31-26-241 ~]# id Nikhil
+uid=1002(Nikhil) gid=1002(Nikhil) groups=1002(Nikhil)
+[root@ip-172-31-26-241 ~]# cat /etc/pass
+Nikhil:x:1002:1002::/home/Nikhil:/bin/bash
+[root@ip-172-31-26-241 ~]# cat /etc/group
+Nikhil:x:1002:
+[root@ip-172-31-26-241 ~]# groupadd Devops
+[root@ip-172-31-26-241 ~]# cat /etc/group
+Nikhil:x:1002:
+Devops:x:1003:
+[root@ip-172-31-26-241 ~]# usermod -g Devops Nikhil
+[root@ip-172-31-26-241 ~]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops)
+[root@ip-172-31-26-241 ~]# groupadd Testing
+[root@ip-172-31-26-241 ~]# cat /etc/group
+Nikhil:x:1002:
+Devops:x:1003:
+Testing:x:1004:
+[root@ip-172-31-26-241 ~]# usermod -aG Testing Nikhil
+[root@ip-172-31-26-241 ~]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops),1004(Testing)
+[root@ip-172-31-26-241 ~]# passwd Nikhil
+Changing password for user Nikhil.
+New password:
+BAD PASSWORD: The password contains the user name in some form
+Retype new password:
+passwd: all authentication tokens updated successfully.
+[root@ip-172-31-26-241 ~]# vim /etc/ssh/sshd_config
+[root@ip-172-31-26-241 ~]# sshd -t
+[root@ip-172-31-26-241 ~]# systemctl restart sshd
+
+Asi Roja@momdad MINGW64 ~
+$ ssh Nikhil@18.212.254.205
+Nikhil@18.212.254.205's password:
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[Nikhil@ip-172-31-26-241 ~]$
+
+To check New user have access to create new user or restart the sshd commands : 
+
+[Nikhil@ip-172-31-26-241 ~]$ useradd Kumar
+useradd: Permission denied.
+useradd: cannot lock /etc/passwd; try again later.
+[Nikhil@ip-172-31-26-241 ~]$ systemctl restart sshd
+Failed to restart sshd.service: Access denied
+See system logs and 'systemctl status sshd.service' for details.
+[Nikhil@ip-172-31-26-241 ~]$
+
+As per above user Nikhil dont have access to it.So from root account providing the sudo access to Nikhil
+
+[root@ip-172-31-26-241 ec2-user]# vim /etc/sudoers
+[root@ip-172-31-26-241 ec2-user]# usermod -aG wheel Nikhil
+[root@ip-172-31-26-241 ec2-user]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops),10(wheel),1004(Testing)
+
+using Sudo Now Nikhil can add the user 
+
+[Nikhil@ip-172-31-26-241 ~]$ sudo useradd Kumar
+[Nikhil@ip-172-31-26-241 ~]$ id Kumar
+uid=1003(Kumar) gid=1005(Kumar) groups=1005(Kumar)
+[Nikhil@ip-172-31-26-241 ~]$ sudo systemctl restart sshd
+
+Nikhil got root user access :
+
+[sudo] password for Nikhil:
+[Nikhil@ip-172-31-26-241 ~]$ sudo su -
+Last login: Mon Feb 23 10:49:21 UTC 2026 on pts/3
+[root@ip-172-31-26-241 ~]#
+
+Now instead of complete root access only specific commands only we would like to provide to the user Nikhil.
+So Again go to Main root user account.
+
+[ec2-user@ip-172-31-26-241 ~]$ which systemctl
+/usr/bin/systemctl
+[root@ip-172-31-26-241 ec2-user]# visudo -c
+/etc/sudoers: parsed OK
+/etc/sudoers.d/90-cloud-init-users: parsed OK
+[root@ip-172-31-26-241 ec2-user]# vim /etc/sudoers
+Now inside we will add at 108: Nikhil  ALL=(ALL)  /usr/bin/systemctl ( Insluded this to use only systemctl command and not other access )
+Now to remove the wheel group for the Nikhil user.so that he dont have all command access. 
+[root@ip-172-31-26-241 ec2-user]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops),10(wheel),1004(Testing)
+[root@ip-172-31-26-241 ec2-user]# gpasswd -d Nikhil wheel
+Removing user Nikhil from group wheel
+[root@ip-172-31-26-241 ec2-user]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops),1004(Testing)
+ 
+Nikhil : 
+
+[Nikhil@ip-172-31-26-241 ~]$ useradd Reddy
+useradd: Permission denied.
+useradd: cannot lock /etc/passwd; try again later.
+[Nikhil@ip-172-31-26-241 ~]$ sudo su
+[sudo] password for Nikhil:
+Sorry, user Nikhil is not allowed to execute '/usr/bin/su' as root on ip-172-31-26-241.ec2.internal.
+[Nikhil@ip-172-31-26-241 ~]$ systemctl restart sshd
+Failed to restart sshd.service: Access denied
+See system logs and 'systemctl status sshd.service' for details.
+[Nikhil@ip-172-31-26-241 ~]$ sudo systemctl restart sshd
+[sudo] password for Nikhil:
+[Nikhil@ip-172-31-26-241 ~]$
+
+.............................................
+
+Now user Nikhil, would like to leave the organisation. so now you have to lock the user first.
+
+To lock User Nikhil : 
+
+[root@ip-172-31-26-241 ~]# usermod -L Nikhil
+
+[Nikhil@ip-172-31-26-241 ~]$ sudo systemctl restart sshd
+[sudo] password for Nikhil:
+Sorry, try again.
+
+To unlock user Nikhil :
+
+[root@ip-172-31-26-241 ~]# usermod -U Nikhil
+
+[Nikhil@ip-172-31-26-241 ~]$ sudo systemctl restart sshd
+[sudo] password for Nikhil:
+[Nikhil@ip-172-31-26-241 ~]$
+
+------------------------------------------------------------
+
+Once user Locked successfully, Now we need to remove the user from groups:
+
+[root@ip-172-31-26-241 ~]# id Nikhil
+uid=1002(Nikhil) gid=1003(Devops) groups=1003(Devops),1004(Testing)
+[root@ip-172-31-26-241 ~]# gpasswd -d Nikhil Testing
+Removing user Nikhil from group Testing
+[root@ip-172-31-26-241 ~]# usermod -g Nikhil Nikhil
+[root@ip-172-31-26-241 ~]# id Nikhil
+uid=1002(Nikhil) gid=1002(Nikhil) groups=1002(Nikhil)
+
+..................................................................................
+
+Once Groups was removed from Nikhil' account. You need to take the back-up files from it as he might have savedrequired files.
+
+[root@ip-172-31-26-241 ~]# tar -cf /root/Nikhil.tar.gz /home/Nikhil
+tar: Removing leading `/' from member names
+[root@ip-172-31-26-241 ~]# ls -l
+total 12
+-rw-r--r--. 1 root root 10240 Feb 23 13:01 Nikhil.tar.gz
+[root@ip-172-31-26-241 ~]# tar -xf Nikhil.tar.gz
+[root@ip-172-31-26-241 ~]# ls -l
+total 12
+-rw-r--r--. 1 root root 10240 Feb 23 13:01 Nikhil.tar.gz
+drwxr-xr-x. 3 root root    20 Feb 23 13:05 home
+[root@ip-172-31-26-241 ~]# ll
+total 12
+-rw-r--r--. 1 root root 10240 Feb 23 13:01 Nikhil.tar.gz
+drwxr-xr-x. 3 root root    20 Feb 23 13:05 home
+[root@ip-172-31-26-241 ~]# cd home
+[root@ip-172-31-26-241 home]# ll
+total 0
+drwx------. 2 Nikhil Nikhil 83 Feb 23 10:54 Nikhil
+[root@ip-172-31-26-241 home]# cd Nikhil/
+[root@ip-172-31-26-241 Nikhil]# ls -la
+total 16
+drwx------. 2 Nikhil Nikhil  83 Feb 23 10:54 .
+drwxr-xr-x. 3 root   root    20 Feb 23 13:05 ..
+-rw-------. 1 Nikhil Nikhil  73 Feb 23 10:54 .bash_history
+-rw-r--r--. 1 Nikhil Nikhil  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Nikhil Nikhil 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Nikhil Nikhil 492 Jan 28  2023 .bashrc
+[root@ip-172-31-26-241 Nikhil]# cd
+[root@ip-172-31-26-241 ~]# userdel -r Nikhil
+userdel: user Nikhil is currently used by process 94211
+[root@ip-172-31-26-241 ~]# userdel -r Nikhil
+userdel: user Nikhil is currently used by process 94211
+[root@ip-172-31-26-241 ~]# kill 97399
+
+[root@ip-172-31-26-241 ~]# ll
+total 12
+-rw-r--r--. 1 root root 10240 Feb 23 13:01 Nikhil.tar.gz
+drwxr-xr-x. 3 root root    20 Feb 23 13:05 home
+[root@ip-172-31-26-241 ~]# cd home
+[root@ip-172-31-26-241 home]# ll
+total 0
+drwx------. 2 1002 1002 83 Feb 23 10:54 Nikhil
+[root@ip-172-31-26-241 home]# id Nikhil
+id: ‘Nikhil’: no such user
+
+
+
+
+1. useradd <user-name>  - > To create one user
+2. id <user-name> -> to view the created user
+3. cat /etc/passwd -> To show all the users password.
+4. cat /etc/group  -> To show all the groups with ids.
+5. In a linux a user will have only one primary group and atleast one secondard group.
+6. groupadd <group-name> -> To create groups
+7. usermod -a <group-name> <user-name>  -> since initially when user created automatically one group was also created by default.So now we are modifiying that group withnew primary group.
+8. usermod -aG <group-name> <user-name> This is to add secondary group for the same user.
+9. Now user account created and groups was assigned to the user. So now user needs to to have password details to login.
+10. passwd <user-name> - > To set password for the user.
+11. Since password set successfully, user need to access the server.
+12. Now user need to access the instance server. So open gitbash in new tab now.
+13. ssh <user-name>@<instance-public-ip-address>   -> To access the instance server
+14. by default key based authentication were disabled.
+15. vim /etc/ssh/sshd_config - > To find the autentication bassed password details and make password authentication yes.
+16. sshd -t  - > If anything wrong it shows errors
+17. systemctl restart sshd -> Since we have changed in sshd , so this is used to refresh or restart the connections.
+18. vim /etc/sudoers - > To check the sudoers file
+19. usermod -aG wheel <user-name>  -> To provide wheel access to the user-name
+20. which systemctl  -> To show where it stored systemctl file
+21. visudo -c - > To check the syntax 
+22. gpasswd -d <user-name> wheel  -> Username wheel permisssions removed.
+23. usermod -L <username> - > To lock the user.
+24. usermod -U <user-name> - > To unlock the user
+25. tar -cf /root/<user-name>.tar.gz /home/<username> - >  To save the back-up file from user account to root account with tar.gz extension.
+26. tar -xf Nikhil.tar.gz -> to extract the file 
+27. kill <process-id> - > To kill the process which are currently running.
+28. ps -ef | grep <user-name> - > To find the user along with procees which are currently running.
+28. userdel -r <user-name> - > To delete the user account.
+
