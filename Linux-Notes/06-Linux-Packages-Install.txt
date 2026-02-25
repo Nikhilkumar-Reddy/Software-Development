@@ -1,0 +1,159 @@
+
+
+----------------------------------
+user and package Managment : 
+-------------------------------
+
+It is mainly used to install the packages and remove the packages. 
+
+[root@ip-172-31-27-106 ec2-user]# sudo dnf install python
+Last metadata expiration check: 0:22:59 ago on Wed Feb 25 18:56:52 2026.
+Dependencies resolved.
+
+[root@ip-172-31-27-106 ec2-user]# cd /etc/yum.repos.d/
+[root@ip-172-31-27-106 yum.repos.d]# ls -l
+total 8
+-rw-r--r--. 1 root root 1028 Feb 10 20:31 amazonlinux.repo
+-rw-r--r--. 1 root root  729 Feb 10 20:31 kernel-livepatch.repo
+[root@ip-172-31-27-106 yum.repos.d]# cat amazonlinux.repo
+[amazonlinux]
+name=Amazon Linux 2023 repository
+
+
+[root@ip-172-31-27-106 yum.repos.d]# dnf list installed
+Installed Packages
+acl.x86_64                          2.3.1-2.amzn2023.0.2            @System
+
+
+
+[root@ip-172-31-27-106 yum.repos.d]# dnf list available
+Available Packages
+metacity.x86_64                     3.54.0-334.amzn2023              amazonlinux
+metacity-devel.x86_64               3.54.0-334.amzn2023              amazonlinux
+metis.x86_64                        5.1.0-32.amzn2023.0.2            amazonlinux
+metis-devel.x86_64                  5.1.0-32.amzn2023.0.2            amazonlinux
+
+
+[root@ip-172-31-27-106 yum.repos.d]# dnf search python
+Last metadata expiration check: 0:33:07 ago on Wed Feb 25 18:56:52 2026.
+======================== Name & Summary Matched: python ========================
+boost-mpich-python3.x86_64 : Python 3 run-time component of Boost.MPI library
+boost-mpich-python3-devel.x86_64 : Shared library symbolic links for Boost.MPI
+                                 : Python 3 component
+boost-openmpi-python3.x86_64 : Python 3 run-time compo
+
+
+
+[root@ip-172-31-27-106 yum.repos.d]# dnf remove nginx -y
+Dependencies resolved.
+================================================================================
+ Package               Arch     Version                    Repository      Size
+================================================================================
+Removing:
+ nginx                 x86_64   1:1.28.2-1.amzn2023.0.1    @amazonlinux   127 k
+Removing unused dependencies:
+
+
+
+[root@ip-172-31-27-106 yum.repos.d]# sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/rpm-stable/jenkins.repo
+
+--2026-02-25 19:34:43--  https://pkg.jenkins.io/rpm-stable/jenkins.repo
+Resolving pkg.jenkins.io (pkg.jenkins.io)... 146.75.38.133, 2a04:4e42:79::645
+Connecting to pkg.jenkins.io (pkg.jenkins.io)|146.75.38.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 267 [application/octet-stream]
+Saving to: ‘/etc/yum.repos.d/jenkins.repo’
+
+/etc/yum.repos.d/je 100%[===================>]     267  --.-KB/s    in 0s
+
+2026-02-25 19:34:43 (10.5 MB/s) - ‘/etc/yum.repos.d/jenkins.repo’ saved [267/267]
+
+[root@ip-172-31-27-106 yum.repos.d]# cat jenkins.repo
+
+[jenkins]
+name=Jenkins-stable
+enabled=1
+type=rpm-md
+baseurl=https://pkg.jenkins.io/rpm-stable
+gpgkey=https://pkg.jenkins.io/rpm-stable/repodata/repomd.xml.key
+gpgcheck=1
+repo_gpgcheck=1
+
+# Only for SUSE/openSUSE distributions with zypper
+autorefresh=1
+keeppackages=0
+[root@ip-172-31-27-106 yum.repos.d]# sudp dnf install jenkins
+bash: sudp: command not found
+[root@ip-172-31-27-106 yum.repos.d]# sudo yum install jenkins
+Jenkins-stable                                   10 kB/s | 833  B     00:00
+Jenkins-stable                                   85 kB/s | 1.6 kB     00:00
+Importing GPG key 0x14ABFC68:
+ Userid     : "Jenkins Project <jenkinsci-board@googlegroups.com>"
+ Fingerprint: 5E38 6EAD B55F 0150 4CAE 8BCF 7198 F4B7 14AB FC68
+ From       : https://pkg.jenkins.io/rpm-stable/repodata/repomd.xml.key
+Is this ok [y/N]: y
+Jenkins-stable                                   20 kB/s | 1.6 kB     00:00
+Dependencies resolved.
+================================================================================
+ Package           Architecture     Version             Repository         Size
+================================================================================
+Installing:
+ jenkins           noarch           2.541.2-1           jenkins            92 M
+
+Transaction Summary
+Installed:
+  jenkins-2.541.2-1.noarch
+
+Complete!
+
+
+[root@ip-172-31-27-106 yum.repos.d]# dnf remove jenkins -y
+Dependencies resolved.
+================================================================================
+ Package          Architecture    Version               Repository         Size
+================================================================================
+Removing:
+ jenkins          noarch          2.541.2-1             @jenkins           92 M
+
+Transaction Summary
+================================================================================
+Remove  1 Package
+
+
+Removed:
+  jenkins-2.541.2-1.noarch
+
+
+
+
+
+_________________________
+
+service management : 
+____________________
+
+Ports total : 0 - 65,535 
+
+Port : A port is a logical communication endpoint used by computers to identify specific processes or services running on a device. 
+
+
+
+Command :
+
+1. /etc/yum.repos.d/ - > Where all URLS are configured.
+2. dnf install < package-name> -> redhat based instance 
+3. dnf remove <package-name> -y - > This will remove the installed package
+4. dnf search <package-name> - > To search some packages.
+5. dnf list available - > this show the available pages to install.
+6. dnf list installed -> to show list of packages already installed.
+7. cat amazonlinux.repo  -> to check the repo 
+
+
+8. systemctl start <service-name>
+9. systemctl status <service-name>
+10. systemctl restart <service-name>
+11. systemctl enable <service-name>
+12. systemctl disable <service-name>
+13. netstat -lnp - > internet reponded protocols 
+14. etstat -lntp - > transport protocols 
