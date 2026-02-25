@@ -1,0 +1,282 @@
+Steps to Have key based Autorization to Access the Linux Operating system using Launch Instance: 
+
+Employees Joins Organisation : 
+1. Employee needs to generate the keys by there own. 
+2. employee sends public keys with Admins.
+3. Admin should create .ssh Folder inside the user home directory
+4. Permissions should be 700 for .ssh 
+5. Ownership should be user including group
+6. Create authorized_keys inside the .ssh Folder and paste public key inside it.
+7. Authorized_keys permissions should be max 600 or 400.
+
+Process To have Key based Autorization to the user.
+
+1. Employee needs to generate the keys by there own. 
+
+Asi Roja@momdad MINGW64 ~
+$ pwd
+/c/Users/Asi Roja
+
+Asi Roja@momdad MINGW64 ~
+$ cd Nikhil
+
+Asi Roja@momdad MINGW64 ~/Nikhil (main)
+$ cd Devops
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops (main)
+$ cd daws-07
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ ssh-keygen -f Reddy.asi
+Generating public/private ed25519 key pair.
+Enter passphrase for "Reddy.asi" (empty for no passphrase):
+Enter same passphrase again:
+Passphrases do not match.  Try again.
+Enter passphrase for "Reddy.asi" (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in Reddy.asi
+Your public key has been saved in Reddy.asi.pub
+The key fingerprint is:
+SHA256:o9AngkEPvErOUj/Mkl+e6FfbdqK5hRJPEagJIc3LTtc Asi Roja@momdad
+The key's randomart image is:
++--[ED25519 256]--+
+|.++.   ..        |
+| o=o  .  .       |
+| ..+.+  .        |
+| .*o+.E  .       |
+|+=.*o + S        |
+|oo+ =o.B.o       |
+|.  o =oooo.      |
+|    o +..o+ .    |
+|   ...  ++ o     |
++----[SHA256]-----+
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ ll
+total 4
+-rw-r--r-- 1 Asi Roja 197121 411 Feb 24 13:07 Reddy.asi
+-rw-r--r-- 1 Asi Roja 197121  97 Feb 24 13:07 Reddy.asi.pub
+
+2. Once private and Public key was generated sent only public key to admins.
+
+Now Admins can check your profile under /home/Reddy.asi  by creating your user account.
+
+[ec2-user@ip-172-31-27-106 ~]$ sudo useradd Reddy.asi
+[ec2-user@ip-172-31-27-106 ~]$ sudo su -
+[root@ip-172-31-27-106 ~]# pwd
+/root
+[root@ip-172-31-27-106 ~]# cd /home/Reddy.asi
+[root@ip-172-31-27-106 Reddy.asi]# ls -la
+total 12
+drwx------. 2 Reddy.asi Reddy.asi  62 Feb 24 07:51 .
+drwxr-xr-x. 4 root      root       39 Feb 24 07:51 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Reddy.asi Reddy.asi 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Reddy.asi Reddy.asi 492 Jan 28  2023 .bashrc
+
+Since user account was cretaed user cerdentials will be stored in .ssh Folder
+
+[root@ip-172-31-27-106 Reddy.asi]# mkdir .ssh
+[root@ip-172-31-27-106 Reddy.asi]# cd .ssh/
+
+____________________________________________________________________
+Now your Public key will be stored under autorized_key files under .ssh directory.
+____________________________________________________________________________________
+
+[root@ip-172-31-27-106 .ssh]# touch authorized_keys
+[root@ip-172-31-27-106 .ssh]# vim authorized_keys
+[root@ip-172-31-27-106 .ssh]# cd ..
+[root@ip-172-31-27-106 Reddy.asi]# ls -la
+total 12
+drwx------. 3 Reddy.asi Reddy.asi  74 Feb 24 07:54 .
+drwxr-xr-x. 4 root      root       39 Feb 24 07:51 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Reddy.asi Reddy.asi 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Reddy.asi Reddy.asi 492 Jan 28  2023 .bashrc
+drwxr-xr-x. 2 root      root       29 Feb 24 07:57 .ssh
+
+_________________________________________________________________________________________
+Since .ssh Directory is only belongs to Reddy.asi so we need  to make root to Reddy.asi 
+__________________________________________________________________________________________
+
+[root@ip-172-31-27-106 Reddy.asi]# chown Reddy.asi:Reddy.asi -R .ssh/
+[root@ip-172-31-27-106 Reddy.asi]# ls -la
+total 12
+drwx------. 3 Reddy.asi Reddy.asi  74 Feb 24 07:54 .
+drwxr-xr-x. 4 root      root       39 Feb 24 07:51 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Reddy.asi Reddy.asi 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Reddy.asi Reddy.asi 492 Jan 28  2023 .bashrc
+drwxr-xr-x. 2 Reddy.asi Reddy.asi  29 Feb 24 07:57 .ssh
+[root@ip-172-31-27-106 Reddy.asi]# cd .ssh
+[root@ip-172-31-27-106 .ssh]# ls -la
+total 4
+drwxr-xr-x. 2 Reddy.asi Reddy.asi 29 Feb 24 07:57 .
+drwx------. 3 Reddy.asi Reddy.asi 74 Feb 24 07:54 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi 97 Feb 24 07:57 authorized_keys
+
+________________________________________________________________________________________
+Now to allow 700 permissions to ssh Directory  and authorized_keys as 600 permissions.
+_______________________________________________________________________________________
+
+[root@ip-172-31-27-106 Reddy.asi]# cd .ssh
+[root@ip-172-31-27-106 .ssh]# ls -la
+total 4
+drwxr-xr-x. 2 Reddy.asi Reddy.asi 29 Feb 24 07:57 .
+drwx------. 3 Reddy.asi Reddy.asi 74 Feb 24 07:54 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi 97 Feb 24 07:57 authorized_keys
+[root@ip-172-31-27-106 .ssh]# chmod 600 authorized_keys
+[root@ip-172-31-27-106 .ssh]# ls -la
+total 4
+drwxr-xr-x. 2 Reddy.asi Reddy.asi 29 Feb 24 07:57 .
+drwx------. 3 Reddy.asi Reddy.asi 74 Feb 24 07:54 ..
+-rw-------. 1 Reddy.asi Reddy.asi 97 Feb 24 07:57 authorized_keys
+[root@ip-172-31-27-106 .ssh]# cd ..
+[root@ip-172-31-27-106 Reddy.asi]# ls -ls
+total 0
+[root@ip-172-31-27-106 Reddy.asi]# ls -la
+total 12
+drwx------. 3 Reddy.asi Reddy.asi  74 Feb 24 07:54 .
+drwxr-xr-x. 4 root      root       39 Feb 24 07:51 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Reddy.asi Reddy.asi 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Reddy.asi Reddy.asi 492 Jan 28  2023 .bashrc
+drwxr-xr-x. 2 Reddy.asi Reddy.asi  29 Feb 24 07:57 .ssh
+[root@ip-172-31-27-106 Reddy.asi]# chmod 700 .ssh
+[root@ip-172-31-27-106 Reddy.asi]# ls -la
+total 12
+drwx------. 3 Reddy.asi Reddy.asi  74 Feb 24 07:54 .
+drwxr-xr-x. 4 root      root       39 Feb 24 07:51 ..
+-rw-r--r--. 1 Reddy.asi Reddy.asi  18 Jan 28  2023 .bash_logout
+-rw-r--r--. 1 Reddy.asi Reddy.asi 141 Jan 28  2023 .bash_profile
+-rw-r--r--. 1 Reddy.asi Reddy.asi 492 Jan 28  2023 .bashrc
+drwx------. 2 Reddy.asi Reddy.asi  29 Feb 24 07:57 .ssh
+
+_____________________________________________________________________________
+Now we can check user can able to access it or not without any password.
+____________________________________________________________________________________
+
+Asi Roja@momdad MINGW64 ~
+$ cd Nikhil/Devops
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops (main)
+$ cd daws-07
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ pwd
+/c/Users/Asi Roja/Nikhil/Devops/daws-07
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ ls -la
+total 8
+drwxr-xr-x 1 Asi Roja 197121   0 Feb 24 13:07 ./
+drwxr-xr-x 1 Asi Roja 197121   0 Feb 24 00:34 ../
+-rw-r--r-- 1 Asi Roja 197121 411 Feb 24 13:07 Reddy.asi
+-rw-r--r-- 1 Asi Roja 197121  97 Feb 24 13:07 Reddy.asi.pub
+-rw-r--r-- 1 Asi Roja 197121 411 Feb 19 01:45 daws-07
+-rw-r--r-- 1 Asi Roja 197121  97 Feb 19 01:45 daws-07.pub
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ ssh -i Reddy.asi Reddy.asi@54.211.83.71
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+[Reddy.asi@ip-172-31-27-106 ~]$
+
+
+
+_________________________________________________________________
+Adding user iinto Groups and assign single group permissions :
+________________________________________________________________
+
+
+[ec2-user@ip-172-31-27-106 ~]$ sudo su
+[root@ip-172-31-27-106 ec2-user]# groupadd devops
+groupadd: group 'devops' already exists
+[ec2-user@ip-172-31-27-106 ~]$ find devops
+
+[ec2-user@ip-172-31-27-106 ~]$ getent group devops
+devops:x:1002:
+
+[ec2-user@ip-172-31-27-106 ~]$ grep devops /etc/group
+devops:x:1002:
+
+[ec2-user@ip-172-31-27-106 ~]$ usermod -g devops Reddy.asi
+usermod: Permission denied.
+usermod: cannot lock /etc/passwd; try again later.
+[ec2-user@ip-172-31-27-106 ~]$ sudo su
+[root@ip-172-31-27-106 ec2-user]# usermod -g devops Reddy.asi
+[root@ip-172-31-27-106 ec2-user]# id Reddy.asi
+uid=1001(Reddy.asi) gid file or directory=1002(devops) groups=1002(devops)
+[root@ip-172-31-27-106 ec2-user]# cd /etc/sudoers.d/
+[root@ip-172-31-27-106 sudoers.d]# ls -l
+total 4
+-r--r-----. 1 root root 128 Feb 24 07:47 90-cloud-init-users
+[root@ip-172-31-27-106 sudoers.d]# Vim devops
+bash: Vim: command not found
+[root@ip-172-31-27-106 sudoers.d]# vim devops
+[root@ip-172-31-27-106 sudoers.d]# sudo whoami
+root
+[root@ip-172-31-27-106 sudoers.d]# visudo
+visudo: /etc/sudoers.tmp unchanged
+[root@ip-172-31-27-106 sudoers.d]# visudo -c
+/etc/sudoers: parsed OK
+/etc/sudoers.d/90-cloud-init-users: parsed OK
+/etc/sudoers.d/devops: bad permissions, should be mode 0440
+
+[root@ip-172-31-27-106 sudoers.d]# chmod 440 devops
+[root@ip-172-31-27-106 sudoers.d]# visudo -c
+/etc/sudoers: parsed OK
+/etc/sudoers.d/90-cloud-init-users: parsed OK
+/etc/sudoers.d/devops: parsed OK
+[root@ip-172-31-27-106 sudoers.d]#
+
+___________________________________________________________________
+Now you can check whether user can able to get the access or not :
+_____________________________________________________________________
+
+
+Asi Roja@momdad MINGW64 ~/Nikhil/Devops/daws-07 (main)
+$ ssh -i Reddy.asi Reddy.asi@54.88.58.127
+   ,     #_
+   ~\_  ####_        Amazon Linux 2023
+  ~~  \_#####\
+  ~~     \###|
+  ~~       \#/ ___   https://aws.amazon.com/linux/amazon-linux-2023
+   ~~       V~' '->
+    ~~~         /
+      ~~._.   _/
+         _/ _/
+       _/m/'
+Last login: Wed Feb 25 18:12:37 2026 from 205.254.168.96
+
+
+[Reddy.asi@ip-172-31-27-106 ~]$ sudo useradd Reddy
+[Reddy.asi@ip-172-31-27-106 ~]$ id Reddy
+uid=1002(Reddy) gid=1003(Reddy) groups=1003(Reddy)
+[Reddy.asi@ip-172-31-27-106 ~]$ usermod -g devops Reddy
+usermod: Permission denied.
+usermod: cannot lock /etc/passwd; try again later.
+[Reddy.asi@ip-172-31-27-106 ~]$ sudo usermod -g devops Reddy
+[Reddy.asi@ip-172-31-27-106 ~]$ id Reddy
+uid=1002(Reddy) gid=1002(devops) groups=1002(devops)
+[Reddy.asi@ip-172-31-27-106 ~]$
+
+
+
+
+
+Commands :
+ 
+1. getent group devops  - > This command mainly used to find the devops group
+2. grep devops /etc/group   -> This also helps us to find the devops group 
+3. cd /etc/sudoers.d/  -> mainly used to create sepearte group access so that original main sudoers access file does not impact.
+4. chmod 600 authorized_keys  - > Authorized keys can be store inside it.
+5. chown Reddy.asi:Reddy.asi -R .ssh/  - > 

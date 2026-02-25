@@ -109,9 +109,6 @@ total 4
 
 
 
-
-
-
 Commands : 
 1.  chmod o+w <file-name.txt>  -> Used to provide write access to others.
 2.  chmod o-w <file-name.txt>  - > Used to remove write access permissions for others.
