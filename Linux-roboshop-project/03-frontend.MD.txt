@@ -1,0 +1,202 @@
+
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v26.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to ec2-user@100.54.231.150                             │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✗  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+
+██████╗ ██╗  ██╗███████╗██╗          █████╗
+██╔══██╗██║  ██║██╔════╝██║         ██╔══██╗
+██████╔╝███████║█████╗  ██║         ╚██████║
+██╔══██╗██╔══██║██╔══╝  ██║          ╚═══██║
+██║  ██║██║  ██║███████╗███████╗     █████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝     ╚════╝
+
+Disclaimer:
+
+This image is designed for only for the lab purpose
+of learning DevOps and not recommended at all to use
+in production or any company environments.
+
+Last login: Tue Jan 13 18:30:33 2026 from 106.195.65.196
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ ec2-user@ip-172-31-31-234 ~ ]$ sudo su -
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# dnf module list nginx
+Last metadata expiration check: 5:42:12 ago on Wed Mar  4 13:46:46 2026.
+Red Hat Enterprise Linux 9 for x86_64 - AppStream from RHUI (RPMs)
+Name                                Stream                               Profiles                                 Summary
+nginx                               1.22                                 common [d]                               nginx webserver
+nginx                               1.24                                 common [d]                               nginx webserver
+nginx                               1.26                                 common [d]                               nginx webserver
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# dnf module disable nginx -y
+Last metadata expiration check: 5:42:26 ago on Wed Mar  4 13:46:46 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                               Architecture                         Version                               Repository                             Size
+==============================================================================================================================================================
+Disabling modules:
+ nginx
+
+Transaction Summary
+==============================================================================================================================================================
+
+Complete!
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# dnf module enable nginx:1.24 -y
+Last metadata expiration check: 5:42:41 ago on Wed Mar  4 13:46:46 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                               Architecture                         Version                               Repository                             Size
+==============================================================================================================================================================
+Enabling module streams:
+ nginx                                                                      1.24
+
+Transaction Summary
+==============================================================================================================================================================
+
+Complete!
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# dnf install nginx -y
+Last metadata expiration check: 5:42:53 ago on Wed Mar  4 13:46:46 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                         Architecture        Version                                                    Repository                               Size
+==============================================================================================================================================================
+Installing:
+ nginx                           x86_64              1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1                 rhel-9-appstream-rhui-rpms               39 k
+Installing dependencies:
+ nginx-core                      x86_64              1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1                 rhel-9-appstream-rhui-rpms              587 k
+ nginx-filesystem                noarch              1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1                 rhel-9-appstream-rhui-rpms               15 k
+ redhat-logos-httpd              noarch              90.5-1.el9_6.1                                             rhel-9-appstream-rhui-rpms               16 k
+
+Transaction Summary
+==============================================================================================================================================================
+Install  4 Packages
+
+Total download size: 657 k
+Installed size: 1.8 M
+Downloading Packages:
+(1/4): nginx-1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64.rpm                                                              706 kB/s |  39 kB     00:00
+(2/4): nginx-core-1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64.rpm                                                         7.4 MB/s | 587 kB     00:00
+(3/4): nginx-filesystem-1.24.0-5.module+el9.7.0+24009+e763bdd7.1.noarch.rpm                                                   608 kB/s |  15 kB     00:00
+(4/4): redhat-logos-httpd-90.5-1.el9_6.1.noarch.rpm                                                                           194 kB/s |  16 kB     00:00
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                         3.9 MB/s | 657 kB     00:00
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                      1/1
+  Running scriptlet: nginx-filesystem-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.noarch                                                                   1/4
+  Installing       : nginx-filesystem-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.noarch                                                                   1/4
+  Installing       : nginx-core-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                                                                         2/4
+  Installing       : redhat-logos-httpd-90.5-1.el9_6.1.noarch                                                                                             3/4
+  Installing       : nginx-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                                                                              4/4
+  Running scriptlet: nginx-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                                                                              4/4
+  Verifying        : redhat-logos-httpd-90.5-1.el9_6.1.noarch                                                                                             1/4
+  Verifying        : nginx-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                                                                              2/4
+  Verifying        : nginx-core-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                                                                         3/4
+  Verifying        : nginx-filesystem-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.noarch                                                                   4/4
+
+Installed:
+  nginx-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64                          nginx-core-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.x86_64
+  nginx-filesystem-1:1.24.0-5.module+el9.7.0+24009+e763bdd7.1.noarch               redhat-logos-httpd-90.5-1.el9_6.1.noarch
+
+Complete!
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# systemctl enable nginx
+Created symlink /etc/systemd/system/multi-user.target.wants/nginx.service → /usr/lib/systemd/system/nginx.service.
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# systemctl start nginx
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# rm -rf /usr/share/nginx/html/*
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 1087k  100 1087k    0     0  7879k      0 --:--:-- --:--:-- --:--:-- 7879k
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# cd /usr/share/nginx/html
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 /usr/share/nginx/html ]# unzip /tmp/frontend.zip
+Archive:  /tmp/frontend.zip
+  inflating: cart.html
+   creating: css/
+  inflating: css/auto-complete.css
+  inflating: css/style.css
+  inflating: empty.html
+  inflating: eum.html
+   creating: images/
+  inflating: images/EPE.png
+  inflating: images/STAN-1.png
+  inflating: images/HPTD.png
+  inflating: images/UHJ.png
+  inflating: images/EMM.png
+  inflating: images/RMC.png
+  inflating: images/Aplha.png
+  inflating: images/SHCE.png
+  inflating: images/CNA.png
+  inflating: images/placeholder.png
+  inflating: images/Watson.png
+  inflating: images/Ewooid.png
+  inflating: images/RED.png
+  inflating: index.html
+   creating: js/
+  inflating: js/controller.js
+  inflating: js/auto-complete.js
+  inflating: login.html
+   creating: media/
+  inflating: media/stan.png
+  inflating: media/graph.png
+  inflating: media/instana_icon_square.png
+  inflating: payment.html
+  inflating: product.html
+  inflating: search.html
+  inflating: shipping.html
+  inflating: splash.html
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 /usr/share/nginx/html ]# vim /etc/nginx/nginx.conf
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 /usr/share/nginx/html ]# systemctl restart nginx
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 /usr/share/nginx/html ]# cd
+
+100.54.231.150 | 172.31.31.234 | t2.micro | null
+[ root@ip-172-31-31-234 ~ ]# netstat -lntp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1214/sshd: /usr/sbi
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      18828/nginx: master
+tcp6       0      0 :::22                   :::*                    LISTEN      1214/sshd: /usr/sbi
+tcp6       0      0 :::80                   :::*                    LISTEN      18828/nginx: master
+
+[ root@ip-172-31-31-234 ~ ]# telnet 100.54.231.150 80
+Trying 100.54.231.150...
+Connected to 100.54.231.150.

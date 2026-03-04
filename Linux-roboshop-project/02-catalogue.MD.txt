@@ -1,0 +1,564 @@
+    ┌──────────────────────────────────────────────────────────────────────┐
+    │                 • MobaXterm Personal Edition v26.0 •                 │
+    │               (SSH client, X server and network tools)               │
+    │                                                                      │
+    │ ⮞ SSH session to ec2-user@52.204.191.221                             │
+    │   • Direct SSH      :  ✓                                             │
+    │   • SSH compression :  ✓                                             │
+    │   • SSH-browser     :  ✓                                             │
+    │   • X11-forwarding  :  ✗  (disabled or not supported by server)      │
+    │                                                                      │
+    │ ⮞ For more info, ctrl+click on help or visit our website.            │
+    └──────────────────────────────────────────────────────────────────────┘
+
+
+██████╗ ██╗  ██╗███████╗██╗          █████╗
+██╔══██╗██║  ██║██╔════╝██║         ██╔══██╗
+██████╔╝███████║█████╗  ██║         ╚██████║
+██╔══██╗██╔══██║██╔══╝  ██║          ╚═══██║
+██║  ██║██║  ██║███████╗███████╗     █████╔╝
+╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝     ╚════╝
+
+Disclaimer:
+
+This image is designed for only for the lab purpose
+of learning DevOps and not recommended at all to use
+in production or any company environments.
+
+Last login: Tue Jan 13 18:30:33 2026 from 106.195.65.196
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ ec2-user@ip-172-31-24-240 ~ ]$ dnf module list nodejs
+Extra Packages for Enterprise Linux 9 - x86_64                                                                                 29 MB/s |  20 MB     00:00
+Extra Packages for Enterprise Linux 9 openh264 (From Cisco) - x86_64                                                          5.3 kB/s | 2.5 kB     00:00
+Red Hat Enterprise Linux 9 for x86_64 - AppStream from RHUI (RPMs)                                                            0.0  B/s |   0  B     00:00
+Errors during downloading metadata for repository 'rhel-9-appstream-rhui-rpms':
+  - Curl error (58): Problem with the local SSL certificate for https://rhui.us-east-1.aws.ce.redhat.com/pulp/mirror/content/dist/rhel9/rhui/9/x86_64/appstream/os [could not load PEM client certificate, OpenSSL error error:8000000D:system library::Permission denied, (no key found, wrong pass phrase, or wrong file format?)]
+Error: Failed to download metadata for repo 'rhel-9-appstream-rhui-rpms': Cannot prepare internal mirrorlist: Curl error (58): Problem with the local SSL certificate for https://rhui.us-east-1.aws.ce.redhat.com/pulp/mirror/content/dist/rhel9/rhui/9/x86_64/appstream/os [could not load PEM client certificate, OpenSSL error error:8000000D:system library::Permission denied, (no key found, wrong pass phrase, or wrong file format?)]
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ ec2-user@ip-172-31-24-240 ~ ]$ sudo su -
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# dnf module list nodejs
+Last metadata expiration check: 4:07:00 ago on Wed Mar  4 14:02:21 2026.
+Red Hat Enterprise Linux 9 for x86_64 - AppStream from RHUI (RPMs)
+Name                         Stream                       Profiles                                                    Summary
+nodejs                       18                           common [d], development, minimal, s2i                       Javascript runtime
+nodejs                       20                           common [d], development, minimal, s2i                       Javascript runtime
+nodejs                       22                           common [d], development, minimal, s2i                       Javascript runtime
+nodejs                       24                           common [d], development, minimal, s2i                       Javascript runtime
+
+Hint: [d]efault, [e]nabled, [x]disabled, [i]nstalled
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# dnf module disable nodejs -y
+Last metadata expiration check: 4:07:22 ago on Wed Mar  4 14:02:21 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                               Architecture                         Version                               Repository                             Size
+==============================================================================================================================================================
+Disabling modules:
+ nodejs
+
+Transaction Summary
+==============================================================================================================================================================
+
+Complete!
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# dnf module enable nodejs:20 -y
+Last metadata expiration check: 4:07:48 ago on Wed Mar  4 14:02:21 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                               Architecture                         Version                               Repository                             Size
+==============================================================================================================================================================
+Enabling module streams:
+ nodejs                                                                     20
+
+Transaction Summary
+==============================================================================================================================================================
+
+Complete!
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# df -h /
+Filesystem                  Size  Used Avail Use% Mounted on
+/dev/mapper/RootVG-rootVol  6.0G  2.3G  3.8G  38% /
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# dnf install nodejs -y
+Last metadata expiration check: 4:08:27 ago on Wed Mar  4 14:02:21 2026.
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                      Architecture       Version                                                         Repository                              Size
+==============================================================================================================================================================
+Installing:
+ nodejs                       x86_64             1:20.20.0-1.module+el9.7.0+23895+0637d423                       rhel-9-appstream-rhui-rpms              14 M
+Installing weak dependencies:
+ nodejs-docs                  noarch             1:20.20.0-1.module+el9.7.0+23895+0637d423                       rhel-9-appstream-rhui-rpms             8.6 M
+ nodejs-full-i18n             x86_64             1:20.20.0-1.module+el9.7.0+23895+0637d423                       rhel-9-appstream-rhui-rpms             8.6 M
+ npm                          x86_64             1:10.8.2-1.20.20.0.1.module+el9.7.0+23895+0637d423              rhel-9-appstream-rhui-rpms             2.3 M
+
+Transaction Summary
+==============================================================================================================================================================
+Install  4 Packages
+
+Total download size: 34 M
+Installed size: 180 M
+Downloading Packages:
+(1/4): nodejs-full-i18n-20.20.0-1.module+el9.7.0+23895+0637d423.x86_64.rpm                                                     27 MB/s | 8.6 MB     00:00
+(2/4): nodejs-docs-20.20.0-1.module+el9.7.0+23895+0637d423.noarch.rpm                                                          24 MB/s | 8.6 MB     00:00
+(3/4): npm-10.8.2-1.20.20.0.1.module+el9.7.0+23895+0637d423.x86_64.rpm                                                         27 MB/s | 2.3 MB     00:00
+(4/4): nodejs-20.20.0-1.module+el9.7.0+23895+0637d423.x86_64.rpm                                                               30 MB/s |  14 MB     00:00
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                          61 MB/s |  34 MB     00:00
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                      1/1
+  Installing       : nodejs-docs-1:20.20.0-1.module+el9.7.0+23895+0637d423.noarch                                                                         1/4
+  Installing       : nodejs-full-i18n-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                                                                    2/4
+  Installing       : npm-1:10.8.2-1.20.20.0.1.module+el9.7.0+23895+0637d423.x86_64                                                                        3/4
+  Installing       : nodejs-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                                                                              4/4
+  Running scriptlet: nodejs-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                                                                              4/4
+  Verifying        : nodejs-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                                                                              1/4
+  Verifying        : nodejs-docs-1:20.20.0-1.module+el9.7.0+23895+0637d423.noarch                                                                         2/4
+  Verifying        : nodejs-full-i18n-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                                                                    3/4
+  Verifying        : npm-1:10.8.2-1.20.20.0.1.module+el9.7.0+23895+0637d423.x86_64                                                                        4/4
+
+Installed:
+  nodejs-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64                         nodejs-docs-1:20.20.0-1.module+el9.7.0+23895+0637d423.noarch
+  nodejs-full-i18n-1:20.20.0-1.module+el9.7.0+23895+0637d423.x86_64               npm-1:10.8.2-1.20.20.0.1.module+el9.7.0+23895+0637d423.x86_64
+
+Complete!
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# mkdir /app
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  3170  100  3170    0     0  42266      0 --:--:-- --:--:-- --:--:-- 42266
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 ~ ]# cd /app
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# unzip /tmp/catalogue.zip
+Archive:  /tmp/catalogue.zip
+   creating: db/
+  inflating: db/master-data.js
+  inflating: package.json
+  inflating: server.js
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# npm install
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated rimraf@2.4.5: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@6.0.4: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated express-pino-logger@4.0.0: use pino-http instead
+npm warn deprecated tar@6.2.1: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 267 packages, and audited 268 packages in 34s
+
+23 packages are looking for funding
+  run `npm fund` for details
+
+5 high severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# vim /etc/systemd/system/catalogue.service
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# systemctl daemon-reload
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# systemctl enable catalogue
+Created symlink /etc/systemd/system/multi-user.target.wants/catalogue.service → /etc/systemd/system/catalogue.service.
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# systemctl start catalogue
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# netstat -lntp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1215/sshd: /usr/sbi
+tcp6       0      0 :::22                   :::*                    LISTEN      1215/sshd: /usr/sbi
+tcp6       0      0 :::8080                 :::*                    LISTEN      33283/node
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# systemctl status catalogue
+● catalogue.service - Catalogue Service
+     Loaded: loaded (/etc/systemd/system/catalogue.service; enabled; preset: disabled)
+     Active: active (running) since Wed 2026-03-04 18:59:32 UTC; 2min 1s ago
+   Main PID: 33283 (node)
+      Tasks: 11 (limit: 4272)
+     Memory: 47.0M (peak: 56.4M)
+        CPU: 771ms
+     CGroup: /system.slice/catalogue.service
+             └─33283 /bin/node /app/server.js
+
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: no original function query to wrap
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: no original function getMore to wrap
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"level":"info","time":1772650774258,"pid":33283,"hostname":"ip-172-31-24-240.ec2.in…0","v":1}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","…
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","…
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","…
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","…
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal snoopy[33312]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal snoopy[33311]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"level":"info","time":1772650774320,"pid":33283,"hostname":"ip-172-31-24-240.ec2.in…d","v":1}
+Hint: Some lines were ellipsized, use -l to show in full.
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# ps -ef | grep node
+roboshop   33283       1  0 18:59 ?        00:00:00 /bin/node /app/server.js
+root       33357       2  0 18:59 ?        00:00:00 [kworker/0:2-xfs-inodegc/dm-3]
+root       34297    1914  0 19:02 pts/0    00:00:00 grep --color=auto node
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# curl https://localhost:8080/health
+curl: (35) error:0A0000C6:SSL routines::packet length too long
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# curl http://localhost:8080/health
+{"app":"OK","mongo":true}
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# telnet 172.31.20.193 27017
+Trying 172.31.20.193...
+Connected to 172.31.20.193.
+Escape character is '^]'.
+^C
+
+^
+^]
+Connection closed by foreign host.
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# vim /etc/yum.repos.d/mongo.repo
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# dnf install mongodb-mongosh -y
+MongoDB Repository                                                                                                            575 kB/s |  86 kB     00:00
+Dependencies resolved.
+==============================================================================================================================================================
+ Package                                  Architecture                    Version                              Repository                                Size
+==============================================================================================================================================================
+Installing:
+ mongodb-mongosh                          x86_64                          2.7.0-1.el8                          mongodb-org-7.0                           67 M
+
+Transaction Summary
+==============================================================================================================================================================
+Install  1 Package
+
+Total download size: 67 M
+Installed size: 295 M
+Downloading Packages:
+mongodb-mongosh-2.7.0.x86_64.rpm                                                                                               76 MB/s |  67 MB     00:00
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                          76 MB/s |  67 MB     00:00
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                      1/1
+  Installing       : mongodb-mongosh-2.7.0-1.el8.x86_64                                                                                                   1/1
+  Running scriptlet: mongodb-mongosh-2.7.0-1.el8.x86_64                                                                                                   1/1
+  Verifying        : mongodb-mongosh-2.7.0-1.el8.x86_64                                                                                                   1/1
+
+Installed:
+  mongodb-mongosh-2.7.0-1.el8.x86_64
+
+Complete!
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# mongosh --host 172.31.20.193 </app/db/master-data.js
+Current Mongosh Log ID: 69a8849630e73ec6b48563b0
+Connecting to:          mongodb://172.31.20.193:27017/?directConnection=true&appName=mongosh+2.7.0
+Using MongoDB:          7.0.30
+Using Mongosh:          2.7.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+
+To help improve our products, anonymous usage data is collected and sent to MongoDB periodically (https://www.mongodb.com/legal/privacy-policy).
+You can opt-out by running the disableTelemetry() command.
+
+------
+   The server generated these startup warnings when booting
+   2026-03-04T18:03:21.544+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2026-03-04T18:03:21.544+00:00: For customers running MongoDB 7.0, we suggest changing the contents of the following sysfsFile
+------
+
+test> //
+
+test> // Products
+
+test> //
+
+test> db = db.getSiblingDB('catalogue');
+catalogue
+catalogue> db.products.insertMany([
+|     {sku: 'Watson', name: 'Watson', description: 'Probably the smartest AI on the planet', price: 2001, instock: 2, categories: ['Artificial Intelligence']},
+|     {sku: 'Ewooid', name: 'Ewooid', description: 'Fully sentient assistant', price: 200, instock: 0, categories: ['Artificial Intelligence']},
+|     {sku: 'HPTD', name: 'High-Powered Travel Droid', description: 'Traveling to the far reaches of the Galaxy? You need this for protection. Comes in handy when you are lost in space', price: 1200, instock: 12, categories: ['Robot']},
+|     {sku: 'UHJ', name: 'Ultimate Harvesting Juggernaut', description: 'Extraterrestrial vegetation harvester', price: 5000, instock: 10, categories: ['Robot']},
+|     {sku: 'EPE', name: 'Extreme Probe Emulator', description: 'Versatile interface adapter for hacking into systems', price: 953, instock: 1, categories: ['Robot']},
+|     {sku: 'EMM', name: 'Exceptional Medical Machine', description: 'Fully automatic surgery droid with exceptional bedside manner', price: 1024, instock: 1, categories: ['Robot']},
+|     {sku: 'SHCE', name: 'Strategic Human Control Emulator', description: 'Diplomatic protocol assistant', price: 300, instock: 12, categories: ['Robot']},
+|     {sku: 'RED', name: 'Responsive Enforcer Droid', description: 'Security detail, will gaurd anything', price: 700, instock: 5, categories: ['Robot']},
+|     {sku: 'RMC', name: 'Robotic Mining Cyborg', description: 'Excellent tunneling capability to get those rare minerals', price: 42, instock: 48, categories: ['Robot']},
+|     {sku: 'STAN-1', name: 'Stan', description: 'Observability guru', price: 67, instock: 1000, categories: ['Robot', 'Artificial Intelligence']},
+|     {sku: 'CNA', name: 'Cybernated Neutralization Android', description: 'Is your spaceship a bit whiffy? This little fellow will bring a breath of fresh air', price: 1000, instock: 0, categories: ['Robot']}
+| ]);
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69a8849830e73ec6b48563b1'),
+    '1': ObjectId('69a8849830e73ec6b48563b2'),
+    '2': ObjectId('69a8849830e73ec6b48563b3'),
+    '3': ObjectId('69a8849830e73ec6b48563b4'),
+    '4': ObjectId('69a8849830e73ec6b48563b5'),
+    '5': ObjectId('69a8849830e73ec6b48563b6'),
+    '6': ObjectId('69a8849830e73ec6b48563b7'),
+    '7': ObjectId('69a8849830e73ec6b48563b8'),
+    '8': ObjectId('69a8849830e73ec6b48563b9'),
+    '9': ObjectId('69a8849830e73ec6b48563ba'),
+    '10': ObjectId('69a8849830e73ec6b48563bb')
+  }
+}
+catalogue>
+
+catalogue> // full text index for searching
+
+catalogue> db.products.createIndex({
+|     name: "text",
+|     description: "text"
+| });
+name_text_description_text
+catalogue>
+
+catalogue> // unique index for product sku
+
+catalogue> db.products.createIndex(
+|     { sku: 1 },
+|     { unique: true }
+| );
+sku_1
+catalogue>
+
+catalogue>
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# mongosh --host 172.31.20.193
+Current Mongosh Log ID: 69a884db3d6d665dc98563b0
+Connecting to:          mongodb://172.31.20.193:27017/?directConnection=true&appName=mongosh+2.7.0
+Using MongoDB:          7.0.30
+Using Mongosh:          2.7.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-03-04T18:03:21.544+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2026-03-04T18:03:21.544+00:00: For customers running MongoDB 7.0, we suggest changing the contents of the following sysfsFile
+------
+
+test> show dbs
+admin      40.00 KiB
+catalogue  80.00 KiB
+config     12.00 KiB
+local      72.00 KiB
+test> use catalouge
+switched to db catalouge
+catalouge> show collections
+
+catalouge> db.products.find()
+
+catalouge> exit
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# mongosh --host 172.31.20.193
+Current Mongosh Log ID: 69a8857ed215e7d3138563b0
+Connecting to:          mongodb://172.31.20.193:27017/?directConnection=true&appName=mongosh+2.7.0
+Using MongoDB:          7.0.30
+Using Mongosh:          2.7.0
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2026-03-04T18:03:21.544+00:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+   2026-03-04T18:03:21.544+00:00: For customers running MongoDB 7.0, we suggest changing the contents of the following sysfsFile
+------
+
+test> show dbs
+admin      40.00 KiB
+catalogue  80.00 KiB
+config     60.00 KiB
+local      72.00 KiB
+test> use catalogue
+switched to db catalogue
+catalogue> show collections
+products
+catalogue> db.products.find()
+[
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b1'),
+    sku: 'Watson',
+    name: 'Watson',
+    description: 'Probably the smartest AI on the planet',
+    price: 2001,
+    instock: 2,
+    categories: [ 'Artificial Intelligence' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b2'),
+    sku: 'Ewooid',
+    name: 'Ewooid',
+    description: 'Fully sentient assistant',
+    price: 200,
+    instock: 0,
+    categories: [ 'Artificial Intelligence' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b3'),
+    sku: 'HPTD',
+    name: 'High-Powered Travel Droid',
+    description: 'Traveling to the far reaches of the Galaxy? You need this for protection. Comes in handy when you are lost in space',
+    price: 1200,
+    instock: 12,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b4'),
+    sku: 'UHJ',
+    name: 'Ultimate Harvesting Juggernaut',
+    description: 'Extraterrestrial vegetation harvester',
+    price: 5000,
+    instock: 10,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b5'),
+    sku: 'EPE',
+    name: 'Extreme Probe Emulator',
+    description: 'Versatile interface adapter for hacking into systems',
+    price: 953,
+    instock: 1,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b6'),
+    sku: 'EMM',
+    name: 'Exceptional Medical Machine',
+    description: 'Fully automatic surgery droid with exceptional bedside manner',
+    price: 1024,
+    instock: 1,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b7'),
+    sku: 'SHCE',
+    name: 'Strategic Human Control Emulator',
+    description: 'Diplomatic protocol assistant',
+    price: 300,
+    instock: 12,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b8'),
+    sku: 'RED',
+    name: 'Responsive Enforcer Droid',
+    description: 'Security detail, will gaurd anything',
+    price: 700,
+    instock: 5,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563b9'),
+    sku: 'RMC',
+    name: 'Robotic Mining Cyborg',
+    description: 'Excellent tunneling capability to get those rare minerals',
+    price: 42,
+    instock: 48,
+    categories: [ 'Robot' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563ba'),
+    sku: 'STAN-1',
+    name: 'Stan',
+    description: 'Observability guru',
+    price: 67,
+    instock: 1000,
+    categories: [ 'Robot', 'Artificial Intelligence' ]
+  },
+  {
+    _id: ObjectId('69a8849830e73ec6b48563bb'),
+    sku: 'CNA',
+    name: 'Cybernated Neutralization Android',
+    description: 'Is your spaceship a bit whiffy? This little fellow will bring a breath of fresh air',
+    price: 1000,
+    instock: 0,
+    categories: [ 'Robot' ]
+  }
+]
+catalogue> exit
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]# journalctl -u catalogue
+Mar 04 18:59:10 ip-172-31-24-240.ec2.internal systemd[1]: /etc/systemd/system/catalogue.service:7: Missing '=', ignoring line.
+Mar 04 18:59:10 ip-172-31-24-240.ec2.internal systemd[1]: /etc/systemd/system/catalogue.service:9: Missing '=', ignoring line.
+Mar 04 18:59:32 ip-172-31-24-240.ec2.internal systemd[1]: Started Catalogue Service.
+Mar 04 18:59:32 ip-172-31-24-240.ec2.internal snoopy[33283]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/bin/node]: /bin/node /app/server.js
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"pidStore","level":30,"msg":"Starting with pid 33283","time":"2026-03-04T18:59:33.385Z","v":0}
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"index","level":30,"msg":"@instana/collector module version: 1.140.1","time":"2026-03-04T18:59:33.570Z","v":0}
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle","level":30,"msg":"Transitioning from <init> to agentHostLookup","time":"2026-03-04T18:59:33.585Z","v":0}
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: no original function query to wrap
+Mar 04 18:59:33 ip-172-31-24-240.ec2.internal catalogue[33283]: no original function getMore to wrap
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"level":"info","time":1772650774258,"pid":33283,"hostname":"ip-172-31-24-240.ec2.internal","msg":"Started on port 8080","v":1}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"index","level":30,"msg":"A precompiled version for gcstats.js is not available (linux/x64/glibc/ABI 115) (at /app/node_modules/@instana/shared-metrics/addons/linux/x64/glibc/115/gcstats.js.tar.gz).","time":"2026-03-04T18:59:34.260Z","v":0}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"index","level":40,"msg":"Could not load gcstats.js. You will not be able to see GC information in Instana for this application. This typically occurs when native addons could not be installed during module installation (npm install). See the instructions to learn more about the requirements of the collector: https://www.ibm.com/docs/de/obi/current?topic=nodejs-collector-installation#native-addons","time":"2026-03-04T18:59:34.261Z","v":0}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"index","level":30,"msg":"A precompiled version for event-loop-stats is not available (linux/x64/glibc/ABI 115) (at /app/node_modules/@instana/shared-metrics/addons/linux/x64/glibc/115/event-loop-stats.tar.gz).","time":"2026-03-04T18:59:34.262Z","v":0}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"index","level":40,"msg":"Could not load event-loop-stats. You will only see limited event loop information in Instana for this application. This typically occurs when native addons could not be installed during module installation (npm install). See the instructions to learn more about the requirements of the collector: https://www.ibm.com/docs/de/obi/current?topic=nodejs-collector-installation#native-addons","time":"2026-03-04T18:59:34.263Z","v":0}
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal snoopy[33312]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal snoopy[33311]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 18:59:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"level":"info","time":1772650774320,"pid":33283,"hostname":"ip-172-31-24-240.ec2.internal","msg":"MongoDB connected","v":1}
+Mar 04 19:01:43 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:01:43.898Z","v":0}
+Mar 04 19:02:43 ip-172-31-24-240.ec2.internal snoopy[34478]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:02:43 ip-172-31-24-240.ec2.internal snoopy[34477]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:03:39 ip-172-31-24-240.ec2.internal catalogue[33283]: {"level":"info","time":1772651019412,"pid":33283,"hostname":"ip-172-31-24-240.ec2.internal","req":{"id":1,"method":"GET","url":"/health","headers":{"host":"localhost:8080","user-agent":"curl/7.76.1","accept":"*/*"},"remoteAddress":"::1","remotePort":47626},"res":{"statusCode":200,"headers":{"x-powered-by":"Express","timing-allow-origin":"*","access-control-allow-origin":"*","content-type":"application/json; charset=utf-8","content-length":"25","etag":"W/\"19-lxLecms+EooPZfmeTebCy69HUmE\""}},"responseTime":7,"msg":"request completed","v":1}
+Mar 04 19:04:52 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:04:52.313Z","v":0}
+Mar 04 19:05:52 ip-172-31-24-240.ec2.internal snoopy[35616]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:05:52 ip-172-31-24-240.ec2.internal snoopy[35615]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:08:00 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:08:00.729Z","v":0}
+Mar 04 19:09:00 ip-172-31-24-240.ec2.internal snoopy[36708]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:09:00 ip-172-31-24-240.ec2.internal snoopy[36707]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:11:09 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:11:09.145Z","v":0}
+Mar 04 19:12:09 ip-172-31-24-240.ec2.internal snoopy[37463]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:12:09 ip-172-31-24-240.ec2.internal snoopy[37462]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:14:17 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:14:17.562Z","v":0}
+Mar 04 19:15:17 ip-172-31-24-240.ec2.internal snoopy[38615]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:15:17 ip-172-31-24-240.ec2.internal snoopy[38614]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:17:25 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:17:25.977Z","v":0}
+Mar 04 19:18:25 ip-172-31-24-240.ec2.internal snoopy[39776]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/usr/bin/awk]: awk /default/ { print $3 }
+Mar 04 19:18:25 ip-172-31-24-240.ec2.internal snoopy[39775]: [uid:991 sid:33283 tty:(none) cwd:/ filename:/sbin/ip]: /sbin/ip route
+Mar 04 19:20:34 ip-172-31-24-240.ec2.internal catalogue[33283]: {"name":"@instana/collector","thread":0,"__in":1,"hostname":"ip-172-31-24-240.ec2.internal","pid":33283,"module":"announceCycle/agentHostLookup","level":40,"msg":"Agent cannot be contacted via 127.0.0.1:42699 nor via default gateway 172.31.16.1:42699. Scheduling reattempt of agent host lookup in 60000 millis.","time":"2026-03-04T19:20:34.393Z","v":0}
+
+52.204.191.221 | 172.31.24.240 | t2.micro | null
+[ root@ip-172-31-24-240 /app ]#
