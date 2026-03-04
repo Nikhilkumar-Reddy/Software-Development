@@ -1,0 +1,5 @@
+To use AMI  - > RHEL-9-DevOps-Practice
+
+AMI to use next time directly in recent  - >ami-09c813fb71547fc4f
+
+ 

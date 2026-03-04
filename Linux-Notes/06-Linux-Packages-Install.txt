@@ -138,6 +138,24 @@ Ports total : 0 - 65,535
 Port : A port is a logical communication endpoint used by computers to identify specific processes or services running on a device. 
 
 
+______________________
+Process-management : 
+_________________________
+
+1. ps - > Process started by the current user.
+2. ps -ef  - > To show all the process running
+3. ps -ef |grep nginx - > to check the proccess with nginx
+4. sleep 10 - > linux tell to sleep 10s in the fg (foreground process )
+5. 4. sleep 10 & - > linux tell to sleep 10s in the bg (background process )
+6. kill <process_id> - > to kill the running process
+7. kill -9 <process_id> -> force kill 
+8. top  -> to show much much cpu memory is consumed in bg.
+9. 
+
+
+
+
+
 
 Command :
 
@@ -156,4 +174,4 @@ Command :
 11. systemctl enable <service-name>
 12. systemctl disable <service-name>
 13. netstat -lnp - > internet reponded protocols 
-14. etstat -lntp - > transport protocols 
+14. etstat -lntp - > transport protocols  ( to check the ports )
