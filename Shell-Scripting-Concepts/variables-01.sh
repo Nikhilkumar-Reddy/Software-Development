@@ -69,3 +69,101 @@ elif [ $Num2 -lt $Num ]; then
 else 
    echo "equal Numer"
 fi
+
+
+# Practice Code To Create Shell Script With User Input Commands 
+echo " Enter the name of the script you want to create: "
+read script_name
+echo " Enter the commands you want to include in the script (type 'END' to finish): "
+commands=""
+while true; do
+    read command
+    if [ "$command" == "END" ]; then
+        break
+    fi
+    commands+="$command"$'\n'
+done
+echo "$commands" > "$script_name.sh"
+echo "Shell script '$script_name.sh' created successfully!"
+
+
+# To Delete Unwanted Files Using Shell Script
+echo " Please enter the file name you want to delete : "
+read file_name
+if [ -f "$file_name" ]; then
+    rm "$file_name"
+    echo "File '$file_name' deleted successfully."
+else
+    echo "File '$file_name' does not exist."
+fi
+
+
+# To delete lot of files in command promt untile user want to stop the process
+
+echo " Please enter the file name you want to delete : "
+
+file_name=""
+
+while true;do
+read file_name
+ if [ "$file_name" == "scripts.sh" ]; then
+        echo "You cannot delete the file 'scripts.sh'. Please enter a different file name."
+        break;
+    elif [ -f "$file_name" ]; then
+        rm "$file_name"
+        echo "File '$file_name' deleted successfully!"
+    else
+        echo "File '$file_name' does not exist."
+        echo "Please enter a valid file name to delete: "
+    fi
+done
+
+
+
+
+# To delete multiple files from the list of files
+
+echo " Please enter the file names you want to delete (separated by space): "
+vim "file_name.txt"
+
+while IFS= read -r file_name; do
+    if [ -f "$file_name" ]; then
+        rm "$file_name"
+        echo "File '$file_name' deleted successfully!"
+    else
+        echo "File '$file_name' does not exist."
+    fi
+done < "file_name.txt"
+
+
+
+Senario 2 :
+
+
+echo " Please enter the file name you want to delete : "
+
+file_names=""
+
+while true;do
+read file_name
+
+    if [ "$file_name" == "scripts.sh" ]; then
+        break
+    fi
+
+    file_names+="$file_name"$'\n'
+  
+done
+
+  echo "$file_names" >> "filenames.txt"
+
+while IFS= read -r file_name; do
+    if [ -f "$file_name" ]; then
+        rm "$file_name"
+        echo "file '$file_name' deleted successfully!"
+    else
+        echo "file '$file_name' does not exist."
+        file_names+="$file_name"$'\n'
+    fi
+done < "filenames.txt"
+
