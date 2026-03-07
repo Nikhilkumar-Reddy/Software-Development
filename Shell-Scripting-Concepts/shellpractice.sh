@@ -30,11 +30,11 @@ read -p "Enter 'yes' to uninstall or 'no' to keep: " server_uninstall
 if [ "$server_uninstall" == "yes" ]; then
     dnf remove $Server -y
     if [ $? -eq 0 ]; then   
-        echo "$Server is uninstalled successfully!"
+        echo "$server_uninstall is uninstalled successfully!"
     else
-        echo "$Server uninstallation failed."
+        echo "$server_uninstall uninstallation failed."
         exit 1
     fi
 else
-    echo "You chose not to uninstall $Server."
+    echo "You chose not to uninstall $server_uninstall."
 fi
