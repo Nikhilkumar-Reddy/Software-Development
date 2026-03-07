@@ -22,9 +22,10 @@ else
 fi
 
 
-echo " Since server install you can decide to uninstall or not :"
+echo " Which server do you want to uninstall? :"
 
-read -p "Enter 'yes' to uninstall or 'no' to keep: " server_uninstall
+
+read -p "Enter the server name to uninstall or 'no' to keep: " server_uninstall
 
 if [ "$server_uninstall" == "yes" ]; then
     dnf remove $server_uninstall -y
