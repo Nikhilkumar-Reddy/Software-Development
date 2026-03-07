@@ -14,7 +14,7 @@ else
     exit 1
 fi
 
-if [ -f "/etc/$Server/$Server.conf" ]; then   
+if [ $? -eq 0 ]; then   
     echo "$Server is installed successfully!"
 else
     echo "$Server installation failed."
