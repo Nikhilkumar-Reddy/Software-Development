@@ -12,4 +12,9 @@ else
     exit 1
 fi
 
-echo "Script name : $0"
+if [ -f "/etc/nginx/nginx.conf" ]; then
+    echo "Nginx is installed successfully!"
+else
+    echo "Nginx installation failed."
+    exit 1
+fi
