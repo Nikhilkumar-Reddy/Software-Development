@@ -9,6 +9,7 @@ if [ $userid -eq 0 ]; then
     dnf install nginx -y
 else
     echo "You are running this script as a non-root user."
+    exit 1
 fi
 
 echo "Script name : $0"
