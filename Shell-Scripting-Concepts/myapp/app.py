@@ -1,1 +1,6 @@
-print("Hello Python")
+# app.py
+import time
+
+while True:
+    print("Hello Python")
+    time.sleep(5)
