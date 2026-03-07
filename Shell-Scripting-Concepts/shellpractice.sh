@@ -27,7 +27,7 @@ echo " Which server do you want to uninstall? :"
 read server_uninstall
 read -p "Enter the 'yes' to uninstall or 'no' to keep: " uninstall_choice
 
-if [ "$server_uninstall" == "$uninstall_choice" ]; then
+if [ "$uninstall_choice" == "yes" ]; then
     dnf remove $server_uninstall -y
     if [ $? -eq 0 ]; then   
         echo "$server_uninstall is uninstalled successfully!"
