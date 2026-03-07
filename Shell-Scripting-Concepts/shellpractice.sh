@@ -11,4 +11,4 @@ else
     echo "You are running this script as a non-root user."
 fi
 
-
+echo "Script name : $0"
