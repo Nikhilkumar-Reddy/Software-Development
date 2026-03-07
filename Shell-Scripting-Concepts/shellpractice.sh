@@ -6,7 +6,7 @@ if [ $userid -eq 0 ]; then
     echo "You are running this script as root."
     echo "You have root privileges."
     echo " Install Nginx Web Server "
-    dnf install nginx -y
+    dnf install nginxx -y
 else
     echo "You are running this script as a non-root user."
     exit 1
