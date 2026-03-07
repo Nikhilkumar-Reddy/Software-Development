@@ -1,5 +1,5 @@
 #!bin/bash
-userid = id -u
+userid=$(id -u)
 echo "Current User ID: $userid"
 
 if [ $userid -eq 0 ]; then
