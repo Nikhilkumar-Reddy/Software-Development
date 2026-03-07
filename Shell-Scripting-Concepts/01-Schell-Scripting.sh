@@ -1,6 +1,12 @@
 #!bin/bash
 
-echo "Senerio 1::: Every Where You need To Update The Content | Difficult "
+
+# What is Shell Scripting ?
+# Shell scripting is a practice of writing a series of commands in a file that can be executed by the shell. 
+#It allows you to automate tasks, manage system operations, and perform various functions without manual intervention.
+
+
+echo "Senerio 1::: Every Where You need To Update The Content | Difficult " 
 
 echo "Nirhal:: Hello Nikhil, This is Nirhal From XYZ Company !"
 echo "Nikhil:: Hello Nirhal, Nice to Meet you ! "
@@ -167,3 +173,32 @@ while IFS= read -r file_name; do
     fi
 done < "filenames.txt"
 
+
+// For Loop Practice
+
+for i in {1..5}
+do
+  echo "Iteration $i"
+done
+
+// Function Practice
+
+greet() {
+  echo "Hello, $1!"
+}
+greet "Roja"
+
+
+
+// To Check Disk Usage and Alert if it Exceeds Threshold
+
+#!/bin/bash
+threshold=80
+usage=$(df / | grep / | awk '{print $90}' | sed 's/%//') # This command gets the disk usage percentage for the root filesystem
+ # The command `df /` shows the disk usage for the root filesystem, `grep /` filters the output to get the line containing the root filesystem, `awk '{print $90}'` extracts the percentage value (you may need to adjust this if your `df` output format is different), and `sed 's/%//'` removes the percentage sign from the value.
+
+if [ $usage -gt $threshold ]; then
+  echo "Warning: Disk usage is above $threshold%!"
+else
+  echo "Disk usage is safe."
+fi
