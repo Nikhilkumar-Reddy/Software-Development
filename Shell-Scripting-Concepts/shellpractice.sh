@@ -14,7 +14,10 @@ fi
 
 if [ -f "/etc/nginx/nginx.conf" ]; then
     echo "Nginx is installed successfully!"
+    dnf remove nginx -y
 else
     echo "Nginx installation failed."
+
     exit 1
 fi
+
