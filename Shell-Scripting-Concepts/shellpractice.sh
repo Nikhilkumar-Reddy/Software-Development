@@ -38,3 +38,4 @@ if [ "$uninstall_choice" == "yes" ]; then
 else
     echo "You chose not to uninstall $server_uninstall."
 fi
+
