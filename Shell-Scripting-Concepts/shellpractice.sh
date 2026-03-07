@@ -21,3 +21,19 @@ else
     exit 1
 fi
 
+
+echo "Since server install you can decide to uninstall or not :"
+
+read server_uninstall
+
+if [ "$server_uninstall" == "yes" ]; then
+    dnf remove $Server -y
+    if [ $? -eq 0 ]; then   
+        echo "$Server is uninstalled successfully!"
+    else
+        echo "$Server uninstallation failed."
+        exit 1
+    fi
+else
+    echo "You chose not to uninstall $Server."
+fi
