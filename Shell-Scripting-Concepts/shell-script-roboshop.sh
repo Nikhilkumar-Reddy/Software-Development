@@ -14,7 +14,7 @@ do
     --output text)
 
 
-    if [ $INSTANCE_ID=="frontend"]; then
+    if [ $INSTANCE_ID == "frontend" ]; then
         echo "frontend instance is created"
         public_ip=$(aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
@@ -27,6 +27,8 @@ do
         --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text)
     fi
-
+    echo "Instance ID: $INSTANCE_ID"
+    echo "Public IP: $public_ip"
+    echo "Private IP: $private_ip"
 done
 
