@@ -1,5 +1,12 @@
 #!/bin/bash
 
+set -e  # Exit immediately if a command exits with a non-zero status
+trap -e 'echo -e "$R An error occurred in $LINENO, $BASH_COMMAND. Exiting... $N"' ERR  # Set up a trap to catch errors and print a message before exiting
+R="\e[31m"  # Red color code
+G="\e[32m"  # Green color code
+Y="\e[33m"  # Yellow color code
+N="\e[0m"   # Normal color code
+
 USERID=$(id -u)  # Get the current user ID and store it in a variable
 echo "current user is: $USERID"  
 
@@ -19,22 +26,25 @@ fi
 
 Function() {
     if [ $1 -eq 0 ]; then    # Check the exit status of the last command
-       echo " $2 successfully!" | tee -a $LOGS_FILE
+       echo -e "$G $2 successfully!" | tee -a $LOGS_FILE
     else
-        echo " $2 failed !" | tee -a $LOGS_FILE  # used to write the output to both console and log file
+        echo -e "$R $2 failed !" | tee -a $LOGS_FILE  # used to write the output to both console and log file
         exit 1
 fi
 
 }
 
-dnf install nginx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "nginx is installed"
 
 
-dnf install mysql -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "mysql is installed"
+for package in nginx mysql node.js; do
+    dnf list installed $package &>> $LOGS_FILE
+    if [ $? -eq 0 ]; then
+        echo -e "$Y $package is already installed." | tee -a $LOGS_FILE 
+    else
+        dnf install $package -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+        Function $? "$package is installed now"
+    fi
+done
 
-dnf remove node.js -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "node.js is removed"
 
 
