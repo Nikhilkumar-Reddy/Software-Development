@@ -20,15 +20,18 @@ do
         --instance-ids $INSTANCE_ID \
         --query 'Reservations[0].Instances[0].PublicIpAddress' \
         --output text)
+        echo "Instance ID: $INSTANCE_ID"
+        echo "Public IP: $public_ip"
+        echo "Private IP: $private_ip"
     else
         echo "backend instance is created"
         private_ip=$(aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
         --query 'Reservations[0].Instances[0].PrivateIpAddress' \
         --output text)
+        echo "Instance ID: $INSTANCE_ID"
+        echo "Public IP: $public_ip"
+        echo "Private IP: $private_ip"
     fi
-    echo "Instance ID: $INSTANCE_ID"
-    echo "Public IP: $public_ip"
-    echo "Private IP: $private_ip"
 done
 
