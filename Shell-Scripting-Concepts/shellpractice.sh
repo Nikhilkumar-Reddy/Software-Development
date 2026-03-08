@@ -25,10 +25,10 @@ fi
 }
 
 dnf install nginx -y  &>> $LOGS_FILE
-Function nginx is installed
+Function "nginx is installed"
 
 
 dnf install mysql -y  &>> $LOGS_FILE
-Function mysql is installed
+Function "mysql is installed"
 
 
