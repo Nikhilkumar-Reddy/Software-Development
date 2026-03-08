@@ -27,11 +27,14 @@ fi
 
 }
 
-dnf install nginxx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+dnf install nginx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
 Function "nginx is installed"
 
 
 dnf install mysql -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
 Function "mysql is installed"
+
+dnf install node.jss -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+Function "node.js is installed"
 
 
