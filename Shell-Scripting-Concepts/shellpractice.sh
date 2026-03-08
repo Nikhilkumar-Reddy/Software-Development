@@ -41,7 +41,7 @@ for package in nginx mysql node.js; do
         echo -e "$Y $package is already installed." | tee -a $LOGS_FILE 
     else
         dnf install $package -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-        Function -e $? " $N $package is installed now"
+        Function $? "$package is installed now"
     fi
 done
 
