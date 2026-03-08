@@ -27,7 +27,7 @@ fi
 
 }
 
-dnf install nginx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+dnf install nginxx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
 Function "nginx is installed"
 
 
