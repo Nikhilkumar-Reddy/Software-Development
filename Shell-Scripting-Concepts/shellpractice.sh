@@ -16,9 +16,9 @@ fi
 
 Function() {
     if [ $? -eq 0 ]; then   
-       echo "$s1 successfully!"
+       echo " $1 successfully!"
     else
-        echo "$s1 failed."
+        echo " $1 failed."
         exit 1
 fi
 
