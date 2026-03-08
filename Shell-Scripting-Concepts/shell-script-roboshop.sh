@@ -14,7 +14,7 @@ do
     --output text)
 
 
-    if [ $INSTANCE_ID == "frontend" ]; then
+    if [ $instance == "frontend" ]; then
         echo "frontend instance is created"
         public_ip=$(aws ec2 describe-instances \
         --instance-ids $INSTANCE_ID \
