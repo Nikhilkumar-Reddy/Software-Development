@@ -23,6 +23,7 @@ do
         echo "Instance ID: $INSTANCE_ID"
         echo "Public IP: $public_ip"
         echo "Private IP: $private_ip"
+        exit 1
     else
         echo "backend instance is created"
         private_ip=$(aws ec2 describe-instances \
@@ -32,6 +33,7 @@ do
         echo "Instance ID: $INSTANCE_ID"
         echo "Public IP: $public_ip"
         echo "Private IP: $private_ip"
+        exit 1
     fi
 done
 
