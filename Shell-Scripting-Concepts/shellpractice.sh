@@ -27,14 +27,18 @@ fi
 
 }
 
-dnf install nginx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "nginx is installed"
 
 
-dnf install mysql -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "mysql is installed"
+for package in nginx mysql node.js; do
+    dnf list installed $package &>> $LOGS_FILE
+    if [ $? -eq 0 ]; then
+        echo "$package is already installed." | tee -a $LOGS_FILE
+        exit 1
+    else
+        dnf install $package -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+        Function $? "$package is installed now"
+    fi
+done
 
-dnf remove node.js -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function $? "node.js is removed"
 
 
