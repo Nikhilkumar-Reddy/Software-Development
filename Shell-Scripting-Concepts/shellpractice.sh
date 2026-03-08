@@ -18,23 +18,23 @@ else
 fi
 
 Function() {
-    if [ $? -eq 0 ]; then    # Check the exit status of the last command
-       echo " $1 successfully!"
+    if [ $1 -eq 0 ]; then    # Check the exit status of the last command
+       echo " $2 successfully!" | tee -a $LOGS_FILE
     else
-        echo " $1 failed." | tee -a $LOGS_FILE  # used to write the output to both console and log file
+        echo " $2 failed !" | tee -a $LOGS_FILE  # used to write the output to both console and log file
         exit 1
 fi
 
 }
 
 dnf install nginx -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function "nginx is installed"
+Function $? "nginx is installed"
 
 
 dnf install mysql -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function "mysql is installed"
+Function $? "mysql is installed"
 
-dnf install node.jss -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
-Function "node.js is installed"
+dnf remove node.js -y  &>> $LOGS_FILE | tee -a $LOGS_FILE
+Function $? "node.js is removed"
 
 
