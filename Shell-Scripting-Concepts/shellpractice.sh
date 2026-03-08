@@ -3,6 +3,9 @@
 USERID=$(id -u)
 echo "current user is: $USERID"
 
+LOGS_FOLDER="/var/log/shell-script"
+LOGS_FILE="$LOGS_FOLDER/$0.log"
+mkdir -p $LOGS_FOLDER
 if [ $USERID -eq 0 ]; then
     echo "You are running this script as root."
     echo "You have root privileges."
@@ -21,11 +24,11 @@ fi
 
 }
 
-dnf install nginx -y
+dnf install nginx -y  &>> $LOGS_FILE
 Function nginx is installed
 
 
-dnf install mysql -y
+dnf install mysql -y  &>> $LOGS_FILE
 Function mysql is installed
 
 
