@@ -36,7 +36,7 @@ do
         RecordSetName="$instance.$DOMAIN_NAME"
     fi
 
-// to get the route53 record set and update the A record with the public IP of the frontend instance or backend instance.
+# to get the route53 record set and update the A record with the public IP of the frontend instance or backend instance.
     
     aws route53 change-resource-record-sets \
     --hosted-zone-id $ZONE_ID \
