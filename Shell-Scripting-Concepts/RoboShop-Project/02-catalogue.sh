@@ -7,6 +7,9 @@ G="\e[32m"  # Green color code
 Y="\e[33m"  # Yellow color code
 N="\e[0m"   # Normal color code
 
+SCRIPT_DIR=$PWD # Get the current working directory and store it in a variable
+MONGODB_HOST="mongodb.lrn-devops.space"  # Define the MongoDB connection string 
+
 USERID=$(id -u)  # Get the current user ID and store it in a variable 
 
 LOGS_FOLDER="/var/log/RoboShop-Project"  # Define the logs folder path
@@ -43,10 +46,16 @@ Function $? "Enable NodeJS module"
 dnf install nodejs -y
 Function $? "Install NodeJS"
 
-useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
-Function $? "Create roboshop user"
+id roboshop &>> $LOGS_FILE
 
-mkdir /app 
+if [ $? -ne 0 ]; then
+    useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
+    Function $? "Create roboshop user"
+else
+    echo -e "$Y roboshop user already exists. Skipping user creation. $N" 
+fi
+
+mkdir -p /app   # Create the /app directory if it doesn't exist
 Function $? "Create /app directory"
 
 curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
@@ -55,6 +64,31 @@ Function $? "Download catalogue code"
 cd /app
 Function $? "Change directory to /app"
 
+rm -rf /app/*  # Remove all files in the /app directory
+Function $? "Clean /app directory"
+
 unzip /tmp/catalogue.zip
 Function $? "Unzip catalogue code"
 
+npm install
+Function $? "Install catalogue dependencies"
+
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
+Function $? "Copy catalogue service file"
+
+systemctl daemon-reload
+Function $? "Reload systemd daemon"
+
+systemctl enable catalogue
+Function $? "Enable catalogue service"
+
+systemctl start catalogue
+Function $? "Start catalogue service"
+
+cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongodb.repo
+Function $? "Copy MongoDB repository file"
+
+dnf install mongodb-mongosh -y
+Function $? "Install MongoDB shell"
+
+mongosh --host $MONGODB_HOST</app/db/master-data.js
