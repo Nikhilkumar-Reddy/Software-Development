@@ -96,7 +96,7 @@ INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().
 Function $? "Check if catalogue database exists"
 
 if [ $INDEX -eq -1 ]; then
-    mongosh --host $MONGODB_HOST </app/db/catalogue.js
+    mongosh --host $MONGODB_HOST </app/db/master-data.js> &>> $LOGS_FILE
     Function $? "Load catalogue database"
 else
     echo -e "$Y catalogue database already exists. Skipping database loading. $N" 
