@@ -91,7 +91,8 @@ Function $? "Copy MongoDB repository file"
 dnf install mongodb-mongosh -y &>> $LOGS_FILE
 Function $? "Install MongoDB shell"
 
-INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDGNames().indexOf("catalogue")' ) &>> $LOGS_FILE
+
+INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDBNames().indexOf("catalogue")' ) &>> $LOGS_FILE
 Function $? "Check if catalogue database exists"
 
 if [ $INDEX -eq -1 ]; then
