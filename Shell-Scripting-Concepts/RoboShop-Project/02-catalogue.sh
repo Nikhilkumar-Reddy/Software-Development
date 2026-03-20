@@ -85,7 +85,7 @@ Function $? "Enable catalogue service"
 systemctl start catalogue &>> $LOGS_FILE
 Function $? "Start catalogue service"
 
-cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongodb.repo 
+cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo 
 Function $? "Copy MongoDB repository file"
 
 dnf install mongodb-mongosh -y &>> $LOGS_FILE
