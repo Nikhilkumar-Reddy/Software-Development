@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e  # Exit immediately if a command exits with a non-zero status
-trap -e 'echo -e "$R An error occurred in $LINENO, $BASH_COMMAND. Exiting... $N"' ERR  # Set up a trap to catch errors and print a message before exiting
+# trap -e 'echo -e "$R An error occurred in $LINENO, $BASH_COMMAND. Exiting... $N"' ERR  # Set up a trap to catch errors and print a message before exiting
 R="\e[31m"  # Red color code
 G="\e[32m"  # Green color code
 Y="\e[33m"  # Yellow color code
@@ -37,19 +37,19 @@ fi
 cp mongo.repo /etc/yum.repos.d/mongo.repo
 Function $? "MongoDB Repository is copied to yum.repos.d"
 
-dnf install mongodb-org -y &>> $LOGS_FILE | tee -a $LOGS_FILE
+dnf install mongodb-org -y &>> $LOGS_FILE 
 Function $? "MongoDB is installed now"
 
-systemctl enable mongod &>> $LOGS_FILE | tee -a $LOGS_FILE
+systemctl enable mongod &>> $LOGS_FILE 
 Function $? "MongoDB is enabled to start on boot"
 
-systemctl start mongod &>> $LOGS_FILE | tee -a $LOGS_FILE
+systemctl start mongod &>> $LOGS_FILE 
 Function $? "MongoDB is started now"
 
 
 sed -i -e 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 Function $? "MongoDB configuration updated"
 
-systemctl restart mongod &>> $LOGS_FILE | tee -a $LOGS_FILE
+systemctl restart mongod &>> $LOGS_FILE 
 Function $? "MongoDB restarted"
 
