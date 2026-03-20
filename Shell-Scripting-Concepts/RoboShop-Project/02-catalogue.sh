@@ -37,13 +37,13 @@ fi
 }
 
 
-dnf module disable nodejs -y
+dnf module disable nodejs -y &>> $LOGS_FILE
 Function $? "Disable NodeJS module"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>> $LOGS_FILE
 Function $? "Enable NodeJS module"
 
-dnf install nodejs -y
+dnf install nodejs -y &>> $LOGS_FILE
 Function $? "Install NodeJS"
 
 id roboshop &>> $LOGS_FILE
@@ -67,34 +67,29 @@ Function $? "Change directory to /app"
 rm -rf /app/*  # Remove all files in the /app directory
 Function $? "Clean /app directory"
 
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>> $LOGS_FILE
 Function $? "Unzip catalogue code"
 
-npm install
+npm install  &>> $LOGS_FILE
 Function $? "Install catalogue dependencies"
 
 cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 Function $? "Copy catalogue service file"
 
-systemctl daemon-reload
+systemctl daemon-reload &>> $LOGS_FILE
 Function $? "Reload systemd daemon"
 
-systemctl enable catalogue
+systemctl enable catalogue &>> $LOGS_FILE
 Function $? "Enable catalogue service"
 
-systemctl start catalogue
+systemctl start catalogue &>> $LOGS_FILE
 Function $? "Start catalogue service"
 
-cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongodb.repo
+cp $SCRIPT_DIR/mongodb.repo /etc/yum.repos.d/mongodb.repo 
 Function $? "Copy MongoDB repository file"
 
-dnf install mongodb-mongosh -y
+dnf install mongodb-mongosh -y &>> $LOGS_FILE
 Function $? "Install MongoDB shell"
-
-
-# to check mongosh is installed or not
-mongosh --version &>> $LOGS_FILE
-Function $? "Check MongoDB shell installation"
 
 INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDGNames().indexOf("catalogue")' ) &>> $LOGS_FILE
 Function $? "Check if catalogue database exists"
