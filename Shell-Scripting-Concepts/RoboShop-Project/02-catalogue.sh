@@ -91,4 +91,18 @@ Function $? "Copy MongoDB repository file"
 dnf install mongodb-mongosh -y
 Function $? "Install MongoDB shell"
 
-mongosh --host $MONGODB_HOST</app/db/master-data.js
+
+# to check mongosh is installed or not
+mongosh --version &>> $LOGS_FILE
+Function $? "Check MongoDB shell installation"
+
+INDEX=$(mongosh --host $MONGODB_HOST --quiet --eval 'db.getMongo().getDGNames().indexOf("catalogue")' ) &>> $LOGS_FILE
+Function $? "Check if catalogue database exists"
+
+if [ $INDEX -eq -1 ]; then
+    mongosh --host $MONGODB_HOST </app/db/catalogue.js
+    Function $? "Load catalogue database"
+else
+    echo -e "$Y catalogue database already exists. Skipping database loading. $N" 
+fi
+
